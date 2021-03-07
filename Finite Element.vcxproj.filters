@@ -1,0 +1,184 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Meshing">
+      <UniqueIdentifier>{7526254c-3278-468f-8674-dc6a5e91f568}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="LinearAlgebra">
+      <UniqueIdentifier>{e4600fe6-94ab-41bf-8e81-ab066048c53f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Functions">
+      <UniqueIdentifier>{5fe71d7a-bacc-4162-b841-1f7448671c01}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Libraries">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Debugging">
+      <UniqueIdentifier>{faecc420-1535-4744-b8df-2cb279c9d215}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Utilities">
+      <UniqueIdentifier>{b9e22603-35ac-4809-a853-aa9ab6ab3e29}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ErrorAnalysis">
+      <UniqueIdentifier>{26c816fd-8f74-4838-89c2-37846221eb60}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="L2Projection">
+      <UniqueIdentifier>{26f1a666-ab65-4c65-b510-35d8b40606b5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Updater">
+      <UniqueIdentifier>{87633576-733a-4b2d-8bec-6676d50976e4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Apps">
+      <UniqueIdentifier>{55b11933-d343-4a2b-881c-ad16d1c1ed6e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Apps\Homework 4">
+      <UniqueIdentifier>{d4da6a1d-bd8e-457b-88f2-9d2028789603}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="EquationSystems">
+      <UniqueIdentifier>{ced30809-6ee5-49c6-b982-d0d397e76bf2}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Integration.cpp">
+      <Filter>Functions</Filter>
+    </ClCompile>
+    <ClCompile Include="LagrangeShapeFunctions1D.cpp">
+      <Filter>Functions</Filter>
+    </ClCompile>
+    <ClCompile Include="Main.cpp" />
+    <ClCompile Include="UniformMesh1D.cpp">
+      <Filter>Meshing</Filter>
+    </ClCompile>
+    <ClCompile Include="FEM.cpp">
+      <Filter>Meshing</Filter>
+    </ClCompile>
+    <ClCompile Include="Log.cpp">
+      <Filter>Debugging</Filter>
+    </ClCompile>
+    <ClCompile Include="Gauss-LegendreNodes.cpp">
+      <Filter>Libraries</Filter>
+    </ClCompile>
+    <ClCompile Include="Vector.cpp">
+      <Filter>LinearAlgebra</Filter>
+    </ClCompile>
+    <ClCompile Include="Matrix.cpp">
+      <Filter>LinearAlgebra</Filter>
+    </ClCompile>
+    <ClCompile Include="L2Projection.cpp">
+      <Filter>L2Projection</Filter>
+    </ClCompile>
+    <ClCompile Include="ErrorAnalysis.cpp">
+      <Filter>ErrorAnalysis</Filter>
+    </ClCompile>
+    <ClCompile Include="Updater.cpp">
+      <Filter>Updater</Filter>
+    </ClCompile>
+    <ClCompile Include="Hwk4_C3.cpp">
+      <Filter>Apps\Homework 4</Filter>
+    </ClCompile>
+    <ClCompile Include="Print.cpp">
+      <Filter>Utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="Hwk4_C1.cpp">
+      <Filter>Apps\Homework 4</Filter>
+    </ClCompile>
+    <ClCompile Include="Hwk4_C2.cpp">
+      <Filter>Apps\Homework 4</Filter>
+    </ClCompile>
+    <ClCompile Include="Mesh1D.cpp">
+      <Filter>Meshing</Filter>
+    </ClCompile>
+    <ClCompile Include="Precompilied.cpp" />
+    <ClCompile Include="Timer.cpp">
+      <Filter>Utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="ACF.cpp">
+      <Filter>EquationSystems</Filter>
+    </ClCompile>
+    <ClCompile Include="EquationSytem1D.cpp">
+      <Filter>EquationSystems</Filter>
+    </ClCompile>
+    <ClCompile Include="ABCF.cpp">
+      <Filter>EquationSystems</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="UniformMesh1D.h">
+      <Filter>Meshing</Filter>
+    </ClInclude>
+    <ClInclude Include="Integration.h">
+      <Filter>Functions</Filter>
+    </ClInclude>
+    <ClInclude Include="LagrangeShapeFunctions1D.h">
+      <Filter>Functions</Filter>
+    </ClInclude>
+    <ClInclude Include="StdLib.h">
+      <Filter>Libraries</Filter>
+    </ClInclude>
+    <ClInclude Include="FEM.h">
+      <Filter>Meshing</Filter>
+    </ClInclude>
+    <ClInclude Include="Log.h">
+      <Filter>Debugging</Filter>
+    </ClInclude>
+    <ClInclude Include="Array2D.h">
+      <Filter>Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="Print.h">
+      <Filter>Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="Gauss-LegendreNodes.h">
+      <Filter>Libraries</Filter>
+    </ClInclude>
+    <ClInclude Include="Vector.h">
+      <Filter>LinearAlgebra</Filter>
+    </ClInclude>
+    <ClInclude Include="Matrix.h">
+      <Filter>LinearAlgebra</Filter>
+    </ClInclude>
+    <ClInclude Include="Container.h">
+      <Filter>Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="L2Projection.h">
+      <Filter>L2Projection</Filter>
+    </ClInclude>
+    <ClInclude Include="ErrorAnalysis.h">
+      <Filter>ErrorAnalysis</Filter>
+    </ClInclude>
+    <ClInclude Include="BoundayEnums.h">
+      <Filter>Meshing</Filter>
+    </ClInclude>
+    <ClInclude Include="Nodes.h">
+      <Filter>Meshing</Filter>
+    </ClInclude>
+    <ClInclude Include="Updater.h">
+      <Filter>Updater</Filter>
+    </ClInclude>
+    <ClInclude Include="Hwk4_C3.h">
+      <Filter>Apps\Homework 4</Filter>
+    </ClInclude>
+    <ClInclude Include="Hwk4_C1.h">
+      <Filter>Apps\Homework 4</Filter>
+    </ClInclude>
+    <ClInclude Include="Hwk4_C2.h">
+      <Filter>Apps\Homework 4</Filter>
+    </ClInclude>
+    <ClInclude Include="Mesh1D.h">
+      <Filter>Meshing</Filter>
+    </ClInclude>
+    <ClInclude Include="Precompilied.h" />
+    <ClInclude Include="Timer.h">
+      <Filter>Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="EquationSytem1D.h">
+      <Filter>EquationSystems</Filter>
+    </ClInclude>
+    <ClInclude Include="ACF.h">
+      <Filter>EquationSystems</Filter>
+    </ClInclude>
+    <ClInclude Include="ABCF.h">
+      <Filter>EquationSystems</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

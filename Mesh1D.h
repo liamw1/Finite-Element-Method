@@ -1,0 +1,31 @@
+#pragma once
+#include "Precompilied.h"
+#include "BoundayEnums.h"
+#include "Nodes.h"
+
+/*
+  Interface for a general 1D mesh.
+*/
+class Mesh1D
+{
+public:
+  const int size;
+  const real xL, xR;
+  int numBoundaryNodes = 0;
+
+  Mesh1D() = delete;
+
+  Mesh1D(const real leftEndPoint, const real rightEndPoint, int n);
+
+  Mesh1D(const Mesh1D& other) = delete;
+
+  Mesh1D(Mesh1D&& other) noexcept;
+
+  Mesh1D& operator=(const Mesh1D& other) = delete;
+
+  virtual MeshNode operator()(const int elementIndex, const EdgeType edgeIndex) const = 0;
+
+  virtual void setBoundaryConditions(const BC_Type leftBoundaryCondition, const BC_Type rightBoundaryCondition) = 0;
+
+  virtual ~Mesh1D();
+};
