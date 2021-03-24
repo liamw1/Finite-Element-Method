@@ -30,3 +30,8 @@
 *.exe
 *.out
 *.app
+/.vs/Finite Element/v16
+/.vs
+/x64/Debug
+/DerivativeErrorRegression.csv
+/ErrorRegression.csv
