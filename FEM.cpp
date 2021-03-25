@@ -13,6 +13,7 @@ FEM::FEM(const Mesh1D& FEmesh, int order)
 
   // Debug
   ASSERT(p > 0, "Polynomial order must be positive");
+  ASSERT(mesh.numBoundaryNodes >= 0, "Boundary conditions have not been set up in mesh");
 
   // Create arrays
   FENodes = new FENode[Ng];

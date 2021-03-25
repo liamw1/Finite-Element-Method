@@ -99,8 +99,10 @@ public:
     d-th derivative of the FE interpolation.
 
     \param n: Number of points to plot per element.
+
+    \param derivativeOrder: (optional)
   */
-  void plot(const int n, const int derivativeOrder) const;
+  void plot(const int n, const int derivativeOrder = 0) const;
 
 private:
   /*

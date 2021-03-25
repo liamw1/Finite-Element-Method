@@ -50,10 +50,21 @@ void Matrix::removeRowAndCol(const int index)
   for (int i = 0; i < n; ++i)
     for (int j = 0; j < n; ++j)
       if (i != index && j != index)
-        newEntries[i - (i > index)][j - (j > index)] = std::move(entries[i][j]);
+        newEntries[i - (i > index)][j - (j > index)] = entries[i][j];
 
   entries = std::move(newEntries);
   n--;
+}
+
+Matrix Matrix::subMatrix(const int index) const
+{
+  Matrix subMatrix = Matrix(n - 1);
+  for (int i = 0; i < n; ++i)
+    for (int j = 0; j < n; ++j)
+      if (i != index && j != index)
+        subMatrix[i - (i > index)][j - (j > index)] = entries[i][j];
+
+  return subMatrix;
 }
 
 int Matrix::size() const
@@ -74,6 +85,24 @@ void Matrix::print() const
     std::cout << "|" << std::endl;
   }
   std::cout << std::endl;
+}
+
+real Matrix::determinant() const
+{
+  return determinant(*this);
+}
+
+real Matrix::determinant(const Matrix& M) const
+{
+  if (M.size() == 2)
+    return M[0][0] * M[1][1] - M[0][1] * M[1][0];
+  else
+  {
+    real sum = 0;
+    for (int i = 0; i < M.size(); ++i)
+      sum += (i % 2 ? -1 : 1) * determinant(M.subMatrix(i));
+    return sum;
+  }
 }
 
 Vector solve(Matrix& A, const Vector& b)
@@ -103,14 +132,12 @@ Vector solve(Matrix& A, const Vector& b)
   }
 
   // Backwards substitution to solve Ux = d
-  x[n-1] = x[n-1] / A[n-1][n-1];
+  x[n-1] /= A[n-1][n-1];
   for (int i = n - 2; i >= 0; --i)
   {
     real s = 0;
     for (int j = i + 1; j < n; ++j)
-    {
       s += A[i][j] * x[j];
-    }
     x[i] = (x[i] - s) / A[i][i];
   }
 

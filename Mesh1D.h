@@ -11,7 +11,7 @@ class Mesh1D
 public:
   const int size;
   const real xL, xR;
-  int numBoundaryNodes = 0;
+  int numBoundaryNodes = -1;
 
   Mesh1D() = delete;
 

@@ -38,6 +38,9 @@
     <Filter Include="EquationSystems">
       <UniqueIdentifier>{ced30809-6ee5-49c6-b982-d0d397e76bf2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Apps\Homework 6">
+      <UniqueIdentifier>{6e771f58-b7cd-444b-9706-c1a924d474fa}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Integration.cpp">
@@ -101,6 +104,9 @@
     </ClCompile>
     <ClCompile Include="ABCF.cpp">
       <Filter>EquationSystems</Filter>
+    </ClCompile>
+    <ClCompile Include="Hwk6_B2.cpp">
+      <Filter>Apps\Homework 6</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -179,6 +185,9 @@
     </ClInclude>
     <ClInclude Include="ABCF.h">
       <Filter>EquationSystems</Filter>
+    </ClInclude>
+    <ClInclude Include="Hwk6_B2.h">
+      <Filter>Apps\Homework 6</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

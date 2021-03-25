@@ -49,4 +49,6 @@ void UniformMesh1D::setBoundaryConditions(const BC_Type leftBoundaryCondition, c
     numBoundaryNodes = 2;
   else if ((int)leftBoundaryCondition >= 0 || (int)rightBoundaryCondition >= 0)
     numBoundaryNodes = 1;
+  else
+    numBoundaryNodes = 0;
 }
