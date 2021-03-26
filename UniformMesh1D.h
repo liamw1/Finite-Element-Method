@@ -29,7 +29,7 @@ public:
   /*
     \returns The node at the specified element index
     and egdeIndex.
-
+    
     \param edgeIndex: Set to 0 for left edge and 1 for right edge.
   */
   MeshNode1D operator()(const int elementIndex, const EdgeType edgeIndex) const override;

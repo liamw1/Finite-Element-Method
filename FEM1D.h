@@ -80,8 +80,8 @@ public:
   
   /*
     \returns the numerical approximation u_h(x) for a given 
-    derivative order..
-
+    derivative order.
+    
     \param elementIndex: Index of element that contains x.
   */
   real evaluate(const real x, const int elementIndex, const int derivativeOrder) const;
@@ -89,7 +89,7 @@ public:
   /*
     \returns the definite integral of the numerical approximation
     u_h(x) over the entire domain.
-
+    
     \param n_gq: Number of Gaussian quadrature nodes.
   */
   real integrate(const int n_gq) const;
@@ -115,7 +115,7 @@ private:
   /*
     \returns the definite integral of the numerical approximation
     u_h(x) over a specified mesh element.
-
+    
     \param n_gq: Number of Gaussian quadrature nodes.
   */
   real integrateElement(const int elementIndex, const int n_gq) const;

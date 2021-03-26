@@ -10,6 +10,7 @@ UniformRectangularMesh2D::UniformRectangularMesh2D(const real xMin, const real x
   const real dx = (xMax - xMin) / nx;
   const real dy = (yMax - yMin) / ny;
 
+  // Set coordinates of nodes
   meshNodes = new MeshNode2D[(nx + 1) * (ny + 1)];
   for (int i = 0; i < ny + 1; ++i)
     for (int j = 0; j < nx + 1; ++j)
@@ -24,11 +25,13 @@ UniformRectangularMesh2D::UniformRectangularMesh2D(const real xMin, const real x
   for (int i = 0; i < ny; ++i)
     for (int j = 0; j < nx; ++j)
     {
+      // Indices corresponding to each corner
       const int botLeft = i * (nx + 1) + j;
       const int botRight = i * (nx + 1) + j + 1;
       const int topLeft = (i + 1) * (nx + 1) + j;
       const int topRight = (i + 1) * (nx + 1) + j + 1;
 
+      // Bisect rectangle to form two triangular mesh elements
       connectivityMatrix[K][0] = botLeft;
       connectivityMatrix[K][1] = botRight;
       connectivityMatrix[K][2] = topRight;
