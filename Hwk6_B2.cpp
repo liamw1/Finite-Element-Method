@@ -19,7 +19,7 @@ void Hwk6_B2_Driver()
   // Create mesh
   UniformMesh1D mesh = UniformMesh1D(xL, xR, n);
   mesh.setBoundaryConditions(BC_Type::Natural, BC_Type::Natural);
-  FEM fem = FEM(mesh, p);
+  FEM1D fem = FEM1D(mesh, p);
 
   // Solve system
   update(fem, equation, n_gq);

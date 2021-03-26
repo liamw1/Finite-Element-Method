@@ -2,7 +2,7 @@
 #include "LagrangeShapeFunctions1D.h"
 
 real lagrangeShapeFunction1D(const real x,
-                             const FEM& fem,
+                             const FEM1D& fem,
                              const int elementIndex,
                              const int nodeIndex,
                              const int derivativeOrder)

@@ -6,7 +6,7 @@ ACF::ACF(realFunction aFunc, realFunction cFunc, realFunction fFunc, realFunctio
 {
 }
 
-Vector ACF::solveSystem(const FEM& fem, const int n_gq) const
+Vector ACF::solveSystem(const FEM1D& fem, const int n_gq) const
 {
   // Create mass matrices and load vector
   Matrix M_xx = FE_MassMatrix1D(fem, a, n_gq, 1);

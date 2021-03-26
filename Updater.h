@@ -8,4 +8,4 @@
   Essential boundary conditions should be enforeced
   before each call of this function.
 */
-void update(FEM& fem, const EquationSystem1D& equationSystem, const int n_gq);
+void update(FEM1D& fem, const EquationSystem1D& equationSystem, const int n_gq);

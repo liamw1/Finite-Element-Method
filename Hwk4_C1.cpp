@@ -7,7 +7,7 @@ static real a(real x) { return x * x + 2.0; }
 static real c(real x) { return x + 1.0; }
 static real f(real x) { return (-4.0 * x * x * x * x - 14.0 * x * x + x - 3.0) *   expl(x * x); }
 
-static void EnforceBoundaryConditions(FEM& fem)
+static void EnforceBoundaryConditions(FEM1D& fem)
 {
   for (int K = 0; K < fem.meshSize; ++K)
     for (int j = 0; j < fem.polynomialOrder + 1; ++j)
@@ -23,7 +23,7 @@ void Hwk4_C1_Driver()
   // Create mesh
   UniformMesh1D mesh = UniformMesh1D(xL, xR, n);
   mesh.setBoundaryConditions(BC_Type::Natural, BC_Type::Essential);
-  FEM fem = FEM(mesh, p);
+  FEM1D fem = FEM1D(mesh, p);
 
   // Create equation system
   ACF equation = ACF(a, c, f, g_n);

@@ -1,7 +1,7 @@
 #include "Precompilied.h"
 #include "ErrorAnalysis.h"
 
-real FE_AbsoluteError1D(const real x, const int elementIndex, const FEM& fem, realFunction f, const int derivativeOrder)
+real FE_AbsoluteError1D(const real x, const int elementIndex, const FEM1D& fem, realFunction f, const int derivativeOrder)
 {
   const int& LEFT = 0, RIGHT = fem.polynomialOrder;
   const int& K = elementIndex;
@@ -12,7 +12,7 @@ real FE_AbsoluteError1D(const real x, const int elementIndex, const FEM& fem, re
   return abs(f(x) - fem.evaluate(x, elementIndex, derivativeOrder));
 }
 
-void plotAbsoluteError1D(const FEM& fem, realFunction f, const int n, const int derivativeOrder)
+void plotAbsoluteError1D(const FEM1D& fem, realFunction f, const int n, const int derivativeOrder)
 {
   const int& LEFT = 0, RIGHT = fem.polynomialOrder;
 
@@ -31,7 +31,7 @@ void plotAbsoluteError1D(const FEM& fem, realFunction f, const int n, const int 
   remove("Out.txt");
 }
 
-real FE_Error1DLocal(const int elementIndex, const FEM& fem, realFunction f, const int n_gq, const int derivativeOrder)
+real FE_Error1DLocal(const int elementIndex, const FEM1D& fem, realFunction f, const int n_gq, const int derivativeOrder)
 {
   const int& K = elementIndex;
   std::vector<real> GLnodes = gauss1DNodesLocal(fem.mesh, K, n_gq);
@@ -47,7 +47,7 @@ real FE_Error1DLocal(const int elementIndex, const FEM& fem, realFunction f, con
   return sqrtl(sum);
 }
 
-real FE_Error1DGlobal(const FEM& fem, realFunction f, const int n_gq, const int derivativeOrder)
+real FE_Error1DGlobal(const FEM1D& fem, realFunction f, const int n_gq, const int derivativeOrder)
 {
   real sum = 0.0;
   for (int K = 0; K < fem.meshSize; ++K)

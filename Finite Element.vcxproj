@@ -151,10 +151,11 @@
     <ClCompile Include="Hwk4_C3.cpp" />
     <ClCompile Include="Hwk6_B2.cpp" />
     <ClCompile Include="Mesh1D.cpp" />
+    <ClCompile Include="Mesh2D.cpp" />
     <ClCompile Include="Precompilied.cpp" />
     <ClCompile Include="Print.cpp" />
     <ClCompile Include="ErrorAnalysis.cpp" />
-    <ClCompile Include="FEM.cpp" />
+    <ClCompile Include="FEM1D.cpp" />
     <ClCompile Include="Gauss-LegendreNodes.cpp" />
     <ClCompile Include="Integration.cpp" />
     <ClCompile Include="L2Projection.cpp" />
@@ -164,6 +165,7 @@
     <ClCompile Include="Matrix.cpp" />
     <ClCompile Include="Timer.cpp" />
     <ClCompile Include="UniformMesh1D.cpp" />
+    <ClCompile Include="UniformRectangularMesh2D.cpp" />
     <ClCompile Include="Updater.cpp" />
     <ClCompile Include="Vector.cpp" />
   </ItemGroup>
@@ -180,19 +182,21 @@
     <ClInclude Include="Mesh1D.h" />
     <ClInclude Include="Container.h" />
     <ClInclude Include="ErrorAnalysis.h" />
-    <ClInclude Include="FEM.h" />
+    <ClInclude Include="FEM1D.h" />
     <ClInclude Include="Gauss-LegendreNodes.h" />
     <ClInclude Include="L2Projection.h" />
     <ClInclude Include="LagrangeShapeFunctions1D.h" />
     <ClInclude Include="Integration.h" />
     <ClInclude Include="Log.h" />
     <ClInclude Include="Matrix.h" />
+    <ClInclude Include="Mesh2D.h" />
     <ClInclude Include="Nodes.h" />
     <ClInclude Include="Precompilied.h" />
     <ClInclude Include="Print.h" />
     <ClInclude Include="StdLib.h" />
     <ClInclude Include="Timer.h" />
     <ClInclude Include="UniformMesh1D.h" />
+    <ClInclude Include="UniformRectangularMesh2D.h" />
     <ClInclude Include="Updater.h" />
     <ClInclude Include="Vector.h" />
   </ItemGroup>

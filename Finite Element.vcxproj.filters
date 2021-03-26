@@ -41,6 +41,12 @@
     <Filter Include="Apps\Homework 6">
       <UniqueIdentifier>{6e771f58-b7cd-444b-9706-c1a924d474fa}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Meshing\1D">
+      <UniqueIdentifier>{42090869-4a54-4510-a3cd-cde8c67cd184}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Meshing\2D">
+      <UniqueIdentifier>{1e791526-2d71-4380-a509-2ed4128f72a7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Integration.cpp">
@@ -50,12 +56,6 @@
       <Filter>Functions</Filter>
     </ClCompile>
     <ClCompile Include="Main.cpp" />
-    <ClCompile Include="UniformMesh1D.cpp">
-      <Filter>Meshing</Filter>
-    </ClCompile>
-    <ClCompile Include="FEM.cpp">
-      <Filter>Meshing</Filter>
-    </ClCompile>
     <ClCompile Include="Log.cpp">
       <Filter>Debugging</Filter>
     </ClCompile>
@@ -89,9 +89,6 @@
     <ClCompile Include="Hwk4_C2.cpp">
       <Filter>Apps\Homework 4</Filter>
     </ClCompile>
-    <ClCompile Include="Mesh1D.cpp">
-      <Filter>Meshing</Filter>
-    </ClCompile>
     <ClCompile Include="Precompilied.cpp" />
     <ClCompile Include="Timer.cpp">
       <Filter>Utilities</Filter>
@@ -108,11 +105,23 @@
     <ClCompile Include="Hwk6_B2.cpp">
       <Filter>Apps\Homework 6</Filter>
     </ClCompile>
+    <ClCompile Include="FEM1D.cpp">
+      <Filter>Meshing\1D</Filter>
+    </ClCompile>
+    <ClCompile Include="Mesh1D.cpp">
+      <Filter>Meshing\1D</Filter>
+    </ClCompile>
+    <ClCompile Include="UniformMesh1D.cpp">
+      <Filter>Meshing\1D</Filter>
+    </ClCompile>
+    <ClCompile Include="Mesh2D.cpp">
+      <Filter>Meshing\2D</Filter>
+    </ClCompile>
+    <ClCompile Include="UniformRectangularMesh2D.cpp">
+      <Filter>Meshing\2D</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="UniformMesh1D.h">
-      <Filter>Meshing</Filter>
-    </ClInclude>
     <ClInclude Include="Integration.h">
       <Filter>Functions</Filter>
     </ClInclude>
@@ -121,9 +130,6 @@
     </ClInclude>
     <ClInclude Include="StdLib.h">
       <Filter>Libraries</Filter>
-    </ClInclude>
-    <ClInclude Include="FEM.h">
-      <Filter>Meshing</Filter>
     </ClInclude>
     <ClInclude Include="Log.h">
       <Filter>Debugging</Filter>
@@ -155,9 +161,6 @@
     <ClInclude Include="BoundayEnums.h">
       <Filter>Meshing</Filter>
     </ClInclude>
-    <ClInclude Include="Nodes.h">
-      <Filter>Meshing</Filter>
-    </ClInclude>
     <ClInclude Include="Updater.h">
       <Filter>Updater</Filter>
     </ClInclude>
@@ -169,9 +172,6 @@
     </ClInclude>
     <ClInclude Include="Hwk4_C2.h">
       <Filter>Apps\Homework 4</Filter>
-    </ClInclude>
-    <ClInclude Include="Mesh1D.h">
-      <Filter>Meshing</Filter>
     </ClInclude>
     <ClInclude Include="Precompilied.h" />
     <ClInclude Include="Timer.h">
@@ -188,6 +188,24 @@
     </ClInclude>
     <ClInclude Include="Hwk6_B2.h">
       <Filter>Apps\Homework 6</Filter>
+    </ClInclude>
+    <ClInclude Include="FEM1D.h">
+      <Filter>Meshing\1D</Filter>
+    </ClInclude>
+    <ClInclude Include="Mesh1D.h">
+      <Filter>Meshing\1D</Filter>
+    </ClInclude>
+    <ClInclude Include="UniformMesh1D.h">
+      <Filter>Meshing\1D</Filter>
+    </ClInclude>
+    <ClInclude Include="Mesh2D.h">
+      <Filter>Meshing\2D</Filter>
+    </ClInclude>
+    <ClInclude Include="Nodes.h">
+      <Filter>Meshing</Filter>
+    </ClInclude>
+    <ClInclude Include="UniformRectangularMesh2D.h">
+      <Filter>Meshing\2D</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

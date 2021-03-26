@@ -22,7 +22,7 @@ public:
     Essential boundary conditions should be enforeced
     before each call of this function.
   */
-  Vector solveSystem(const FEM& fem, const int n_gq) const override;
+  Vector solveSystem(const FEM1D& fem, const int n_gq) const override;
 
 private:
   realFunction a, b, c, f;

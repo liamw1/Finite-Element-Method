@@ -1,6 +1,6 @@
 #pragma once
 #include "Precompilied.h"
-#include "FEM.h"
+#include "FEM1D.h"
 #include "Gauss-LegendreNodes.h"
 
 /*
@@ -13,7 +13,7 @@
   \param derivativeOrder: Order of derivative of FE interpolation.  This function
   does NOT cacluate the derivative of f.  Must pass in the derivative manually.
 */
-real FE_AbsoluteError1D(const real x, const int elementIndex, const FEM& fem, realFunction f, const int derivativeOrder);
+real FE_AbsoluteError1D(const real x, const int elementIndex, const FEM1D& fem, realFunction f, const int derivativeOrder);
 
 /*
   Outputs a file called "Out.txt" that when graphed gives the
@@ -26,7 +26,7 @@ real FE_AbsoluteError1D(const real x, const int elementIndex, const FEM& fem, re
   \param derivativeOrder: Order of derivative of FE interpolation.  This function
   does NOT cacluate the derivative of f.  Must pass in the derivative manually.
 */
-void plotAbsoluteError1D(const FEM& fem, realFunction f, const int n, const int derivativeOrder);
+void plotAbsoluteError1D(const FEM1D& fem, realFunction f, const int n, const int derivativeOrder);
 
 /*
   \returns the L2 norm of the absolute error over a given element.  Integration done
@@ -39,7 +39,7 @@ void plotAbsoluteError1D(const FEM& fem, realFunction f, const int n, const int 
   \param derivativeOrder: Order of derivative of FE interpolation.  This function
   does NOT cacluate the derivative of f.  Must pass in the derivative manually.
 */
-real FE_Error1DLocal(const int elementIndex, const FEM& fem, realFunction f, const int n_gq, const int derivativeOrder);
+real FE_Error1DLocal(const int elementIndex, const FEM1D& fem, realFunction f, const int n_gq, const int derivativeOrder);
 
 /*
   \returns the L2 norm of the absolute error over the entire domain.
@@ -52,4 +52,4 @@ real FE_Error1DLocal(const int elementIndex, const FEM& fem, realFunction f, con
   \param derivativeOrder: Order of derivative of FE interpolation.  This function
   does NOT cacluate the derivative of f.  Must pass in the derivative manually.
 */
-real FE_Error1DGlobal(const FEM& fem, realFunction f, const int n_gq, const int derivativeOrder);
+real FE_Error1DGlobal(const FEM1D& fem, realFunction f, const int n_gq, const int derivativeOrder);

@@ -32,7 +32,7 @@ public:
 
     \param edgeIndex: Set to 0 for left edge and 1 for right edge.
   */
-  MeshNode operator()(const int elementIndex, const EdgeType edgeIndex) const override;
+  MeshNode1D operator()(const int elementIndex, const EdgeType edgeIndex) const override;
 
   ~UniformMesh1D() override;
 
@@ -47,5 +47,5 @@ private:
   Array2D<int> connectivityMatrix;
 
   // Stores the x-values and boundary conditions of all the nodes in the mesh
-  MeshNode* meshNodes;
+  MeshNode1D* meshNodes;
 };

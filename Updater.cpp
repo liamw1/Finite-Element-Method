@@ -1,7 +1,7 @@
 #include "Precompilied.h"
 #include "Updater.h"
 
-void update(FEM& fem, const EquationSystem1D& equationSystem, const int n_gq)
+void update(FEM1D& fem, const EquationSystem1D& equationSystem, const int n_gq)
 {
   Vector u_h = equationSystem.solveSystem(fem, n_gq);
 

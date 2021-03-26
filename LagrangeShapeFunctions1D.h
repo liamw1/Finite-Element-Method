@@ -1,6 +1,6 @@
 #pragma once
 #include "Precompilied.h"
-#include "FEM.h"
+#include "FEM1D.h"
 
 /*
   Calculates a 1D Lagrange shape function for an element K 
@@ -10,7 +10,7 @@
   \param node: The index of a node within the given element.
   \param derivativeOrder: The derivative order.
 */
-real lagrangeShapeFunction1D(const real x, const FEM& fem, const int element, const int node, const int derivativeOrder);
+real lagrangeShapeFunction1D(const real x, const FEM1D& fem, const int element, const int node, const int derivativeOrder);
 
 /*
   Recursively calculates the nth derivative of the j-th Lagrange

@@ -15,7 +15,7 @@ public:
 
   Mesh1D() = delete;
 
-  Mesh1D(const real leftEndPoint, const real rightEndPoint, int n);
+  Mesh1D(const real leftEndPoint, const real rightEndPoint, const int n);
 
   Mesh1D(const Mesh1D& other) = delete;
 
@@ -23,7 +23,7 @@ public:
 
   Mesh1D& operator=(const Mesh1D& other) = delete;
 
-  virtual MeshNode operator()(const int elementIndex, const EdgeType edgeIndex) const = 0;
+  virtual MeshNode1D operator()(const int elementIndex, const EdgeType edgeIndex) const = 0;
 
   virtual void setBoundaryConditions(const BC_Type leftBoundaryCondition, const BC_Type rightBoundaryCondition) = 0;
 

@@ -8,7 +8,7 @@ UniformMesh1D::UniformMesh1D(const real leftEndPoint, const real rightEndPoint, 
   ASSERT(n > 0, "Invalid mesh size: A mesh must have a least one element!");
   ASSERT(xL < xR, "Invalid domain: xR must be greater than xL!");
 
-  meshNodes = new MeshNode[n + 1];
+  meshNodes = new MeshNode1D[n + 1];
   meshNodes[0].x = xL;
   for (int i = 0; i < n; ++i)
   {
@@ -26,7 +26,7 @@ UniformMesh1D::UniformMesh1D(UniformMesh1D&& other) noexcept
   other.meshNodes = nullptr;
 }
 
-MeshNode UniformMesh1D::operator()(const int elementIndex, const EdgeType edgeIndex) const
+MeshNode1D UniformMesh1D::operator()(const int elementIndex, const EdgeType edgeIndex) const
 {
   // Debug
   ASSERT(elementIndex >= 0, "Element index must be non-negative");

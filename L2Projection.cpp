@@ -3,7 +3,7 @@
 
 static real identityFunction(real x) { return 1.0; }
 
-Vector FE_LoadVector1D(const FEM& fem, realFunction f, const int n_gq, const int derivativeOrder)
+Vector FE_LoadVector1D(const FEM1D& fem, realFunction f, const int n_gq, const int derivativeOrder)
 {
   Vector b = Vector(fem.Ng);
   for (int K = 0; K < fem.meshSize; ++K)
@@ -27,22 +27,22 @@ Vector FE_LoadVector1D(const FEM& fem, realFunction f, const int n_gq, const int
   return b;
 }
 
-Matrix FE_MassMatrix1D(const FEM& fem, const int n_gq, const int derivativeOrder)
+Matrix FE_MassMatrix1D(const FEM1D& fem, const int n_gq, const int derivativeOrder)
 {
   return FE_MassMatrix1D(fem, identityFunction, n_gq, derivativeOrder, derivativeOrder);
 }
 
-Matrix FE_MassMatrix1D(const FEM& fem, const int n_gq, const int derivativeOrder1, const int derivativeOrder2)
+Matrix FE_MassMatrix1D(const FEM1D& fem, const int n_gq, const int derivativeOrder1, const int derivativeOrder2)
 {
   return FE_MassMatrix1D(fem, identityFunction, n_gq, derivativeOrder1, derivativeOrder2);
 }
 
-Matrix FE_MassMatrix1D(const FEM& fem, realFunction a, const int n_gq, const int derivativeOrder)
+Matrix FE_MassMatrix1D(const FEM1D& fem, realFunction a, const int n_gq, const int derivativeOrder)
 {
   return FE_MassMatrix1D(fem, a, n_gq, derivativeOrder, derivativeOrder);
 }
 
-Matrix FE_MassMatrix1D(const FEM& fem, realFunction a, const int n_gq, const int derivativeOrder1, const int derivativeOrder2)
+Matrix FE_MassMatrix1D(const FEM1D& fem, realFunction a, const int n_gq, const int derivativeOrder1, const int derivativeOrder2)
 {
   Matrix M = Matrix(fem.Ng);
   for (int K = 0; K < fem.meshSize; ++K)
@@ -68,7 +68,7 @@ Matrix FE_MassMatrix1D(const FEM& fem, realFunction a, const int n_gq, const int
   return M;
 }
 
-void L2_Projection(FEM& fem, realFunction f, const int n_gq, const int derivativeOrder)
+void L2_Projection(FEM1D& fem, realFunction f, const int n_gq, const int derivativeOrder)
 {
   Matrix M = FE_MassMatrix1D(fem, n_gq, derivativeOrder);
   Vector b = FE_LoadVector1D(fem, f, n_gq, derivativeOrder);
