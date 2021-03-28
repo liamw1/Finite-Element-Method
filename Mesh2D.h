@@ -9,7 +9,7 @@
 class Mesh2D
 {
 public:
-  const int size;
+  const int size;  // Number of mesh elements
 
   Mesh2D() = delete;
 

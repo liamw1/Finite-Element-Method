@@ -9,7 +9,7 @@
 class Mesh1D
 {
 public:
-  const int size;
+  const int size;  // Number of mesh elements
   const real xL, xR;
   int numBoundaryNodes = -1;
 

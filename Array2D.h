@@ -53,3 +53,19 @@ public:
 private:
   Container<T> container;
 };
+
+
+template<typename T>
+void printArray(const Array2D<T>& data, const int size1, const int size2)
+{
+  for (int j = 0; j < size2; ++j)
+  {
+    std::cout << "|";
+    for (int i = 0; i < size1; ++i)
+    {
+      std::cout << data[i][j] << " ";
+    }
+    std::cout << "|" << std::endl;
+  }
+  std::cout << std::endl;
+}

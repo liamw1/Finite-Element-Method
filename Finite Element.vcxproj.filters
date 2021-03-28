@@ -47,6 +47,9 @@
     <Filter Include="Meshing\2D">
       <UniqueIdentifier>{1e791526-2d71-4380-a509-2ed4128f72a7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="EquationSystems\1D">
+      <UniqueIdentifier>{331f6e02-5c30-432b-9ce3-865718ff2be8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Integration.cpp">
@@ -58,9 +61,6 @@
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Log.cpp">
       <Filter>Debugging</Filter>
-    </ClCompile>
-    <ClCompile Include="Gauss-LegendreNodes.cpp">
-      <Filter>Libraries</Filter>
     </ClCompile>
     <ClCompile Include="Vector.cpp">
       <Filter>LinearAlgebra</Filter>
@@ -93,15 +93,6 @@
     <ClCompile Include="Timer.cpp">
       <Filter>Utilities</Filter>
     </ClCompile>
-    <ClCompile Include="ACF.cpp">
-      <Filter>EquationSystems</Filter>
-    </ClCompile>
-    <ClCompile Include="EquationSytem1D.cpp">
-      <Filter>EquationSystems</Filter>
-    </ClCompile>
-    <ClCompile Include="ABCF.cpp">
-      <Filter>EquationSystems</Filter>
-    </ClCompile>
     <ClCompile Include="Hwk6_B2.cpp">
       <Filter>Apps\Homework 6</Filter>
     </ClCompile>
@@ -119,6 +110,18 @@
     </ClCompile>
     <ClCompile Include="UniformRectangularMesh2D.cpp">
       <Filter>Meshing\2D</Filter>
+    </ClCompile>
+    <ClCompile Include="ABCF.cpp">
+      <Filter>EquationSystems\1D</Filter>
+    </ClCompile>
+    <ClCompile Include="ACF.cpp">
+      <Filter>EquationSystems\1D</Filter>
+    </ClCompile>
+    <ClCompile Include="EquationSytem1D.cpp">
+      <Filter>EquationSystems\1D</Filter>
+    </ClCompile>
+    <ClCompile Include="Gauss-LegendreNodes.cpp">
+      <Filter>Functions</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -139,9 +142,6 @@
     </ClInclude>
     <ClInclude Include="Print.h">
       <Filter>Utilities</Filter>
-    </ClInclude>
-    <ClInclude Include="Gauss-LegendreNodes.h">
-      <Filter>Libraries</Filter>
     </ClInclude>
     <ClInclude Include="Vector.h">
       <Filter>LinearAlgebra</Filter>
@@ -177,15 +177,6 @@
     <ClInclude Include="Timer.h">
       <Filter>Utilities</Filter>
     </ClInclude>
-    <ClInclude Include="EquationSytem1D.h">
-      <Filter>EquationSystems</Filter>
-    </ClInclude>
-    <ClInclude Include="ACF.h">
-      <Filter>EquationSystems</Filter>
-    </ClInclude>
-    <ClInclude Include="ABCF.h">
-      <Filter>EquationSystems</Filter>
-    </ClInclude>
     <ClInclude Include="Hwk6_B2.h">
       <Filter>Apps\Homework 6</Filter>
     </ClInclude>
@@ -206,6 +197,18 @@
     </ClInclude>
     <ClInclude Include="UniformRectangularMesh2D.h">
       <Filter>Meshing\2D</Filter>
+    </ClInclude>
+    <ClInclude Include="EquationSytem1D.h">
+      <Filter>EquationSystems\1D</Filter>
+    </ClInclude>
+    <ClInclude Include="ABCF.h">
+      <Filter>EquationSystems\1D</Filter>
+    </ClInclude>
+    <ClInclude Include="ACF.h">
+      <Filter>EquationSystems\1D</Filter>
+    </ClInclude>
+    <ClInclude Include="Gauss-LegendreNodes.h">
+      <Filter>Functions</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

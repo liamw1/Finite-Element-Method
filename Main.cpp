@@ -6,5 +6,5 @@
 
 int main()
 {
-  UniformRectangularMesh2D mesh = UniformRectangularMesh2D(0, 1, 0.5, 1.1, 5, 4);
+  UniformRectangularMesh2D mesh = UniformRectangularMesh2D(0, 1, 0.5, 1.1, 2, 2);
 }
