@@ -146,10 +146,12 @@
     <ClCompile Include="ABCF.cpp" />
     <ClCompile Include="ACF.cpp" />
     <ClCompile Include="EquationSytem1D.cpp" />
+    <ClCompile Include="FEM2D.cpp" />
     <ClCompile Include="Hwk4_C1.cpp" />
     <ClCompile Include="Hwk4_C2.cpp" />
     <ClCompile Include="Hwk4_C3.cpp" />
     <ClCompile Include="Hwk6_B2.cpp" />
+    <ClCompile Include="LagrangeShapeFunctions2D.cpp" />
     <ClCompile Include="Mesh1D.cpp" />
     <ClCompile Include="Mesh2D.cpp" />
     <ClCompile Include="Precompilied.cpp" />
@@ -175,10 +177,12 @@
     <ClInclude Include="Array2D.h" />
     <ClInclude Include="BoundayEnums.h" />
     <ClInclude Include="EquationSytem1D.h" />
+    <ClInclude Include="FEM2D.h" />
     <ClInclude Include="Hwk4_C1.h" />
     <ClInclude Include="Hwk4_C2.h" />
     <ClInclude Include="Hwk4_C3.h" />
     <ClInclude Include="Hwk6_B2.h" />
+    <ClInclude Include="LagrangeShapeFunctions2D.h" />
     <ClInclude Include="Mesh1D.h" />
     <ClInclude Include="Container.h" />
     <ClInclude Include="ErrorAnalysis.h" />

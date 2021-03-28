@@ -44,6 +44,20 @@ Matrix Matrix::operator+(const Matrix& other) const
   return sum;
 }
 
+void Matrix::operator*=(const real scalar)
+{
+  for (int i = 0; i < n; ++i)
+    for (int j = 0; j < n; ++j)
+      entries[i][j] *= scalar;
+}
+
+void Matrix::operator/=(const real scalar)
+{
+  for (int i = 0; i < n; ++i)
+    for (int j = 0; j < n; ++j)
+      entries[i][j] /= scalar;
+}
+
 void Matrix::removeRowAndCol(const int index)
 {
   Array2D<real> newEntries = Array2D<real>(n - 1, n - 1);

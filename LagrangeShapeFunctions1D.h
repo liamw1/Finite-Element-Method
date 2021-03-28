@@ -8,7 +8,6 @@
 
   \param element: The index of an element within fem.
   \param node: The index of a node within the given element.
-  \param derivativeOrder: The derivative order.
 */
 real lagrangeShapeFunction1D(const real x, const FEM1D& fem, const int element, const int node, const int derivativeOrder);
 
@@ -20,6 +19,5 @@ real lagrangeShapeFunction1D(const real x, const FEM1D& fem, const int element, 
   \param t: The result when x is mapped onto [-1, 1].
   \param t_j: The coordinate of the j-th node when mapped to [-1, 1].
   \param refNodes: An array of node coordinates that have been mapped to [-1, 1].
-  \param derivativeOrder: The derivative order.
 */
 real refLagrangePolynomial1D(const real t, const real t_j, std::vector<real>& refNodes, const int derivativeOrder);

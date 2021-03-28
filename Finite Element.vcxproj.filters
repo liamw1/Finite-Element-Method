@@ -123,6 +123,12 @@
     <ClCompile Include="Gauss-LegendreNodes.cpp">
       <Filter>Functions</Filter>
     </ClCompile>
+    <ClCompile Include="LagrangeShapeFunctions2D.cpp">
+      <Filter>Functions</Filter>
+    </ClCompile>
+    <ClCompile Include="FEM2D.cpp">
+      <Filter>Meshing\2D</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Integration.h">
@@ -209,6 +215,12 @@
     </ClInclude>
     <ClInclude Include="Gauss-LegendreNodes.h">
       <Filter>Functions</Filter>
+    </ClInclude>
+    <ClInclude Include="LagrangeShapeFunctions2D.h">
+      <Filter>Functions</Filter>
+    </ClInclude>
+    <ClInclude Include="FEM2D.h">
+      <Filter>Meshing\2D</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

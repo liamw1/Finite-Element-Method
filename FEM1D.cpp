@@ -2,7 +2,7 @@
 #include "FEM1D.h"
 #include "LagrangeShapeFunctions1D.h"
 
-FEM1D::FEM1D(const Mesh1D& FEmesh, int order)
+FEM1D::FEM1D(const Mesh1D& FEmesh, const int order)
   : mesh(FEmesh),
   meshSize(mesh.size),
   polynomialOrder(order),
@@ -46,7 +46,7 @@ FEM1D::FEM1D(const Mesh1D& FEmesh, int order)
     boundaryIndices.emplace_back(meshSize * p);
 }
 
-FEM1D::FEM1D(const Mesh1D& FEmesh, int order, realFunction initialCondition)
+FEM1D::FEM1D(const Mesh1D& FEmesh, const int order, realFunction initialCondition)
   : FEM1D(FEmesh, order)
 {
   const auto& f = initialCondition;

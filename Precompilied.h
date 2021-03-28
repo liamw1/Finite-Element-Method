@@ -7,6 +7,7 @@ using realFunction = real(*)(real);
 
 // Important constants
 constexpr real PI = 3.14159265358979323846;
+constexpr real TOLERANCE = 1e-14;
 
 
 // ------------------------------ Macros ------------------------------ //

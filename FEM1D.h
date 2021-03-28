@@ -21,7 +21,7 @@ public:
     Generates a finite element method using a given mesh and a
     polynomial order.
   */
-  FEM1D(const Mesh1D& mesh, int order);
+  FEM1D(const Mesh1D& FEmesh, const int order);
 
   /*
     Generates a finite element method using a given mesh, a
@@ -29,7 +29,7 @@ public:
 
     Will use Lagrange interpolation to approximate the initial condition function.
   */
-  FEM1D(const Mesh1D& mesh, int order, realFunction initialCondition);
+  FEM1D(const Mesh1D& mesh, const int order, realFunction initialCondition);
 
   /*
     Move constructor.

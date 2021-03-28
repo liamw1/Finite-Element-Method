@@ -26,6 +26,10 @@ public:
 
   Matrix operator+(const Matrix& other) const;
 
+  void operator*=(const real scalar);
+
+  void operator/=(const real scalar);
+
   /*
     Removes all entries in the row and column of the specified index
   */
