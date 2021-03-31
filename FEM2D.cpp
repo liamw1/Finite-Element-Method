@@ -34,7 +34,7 @@ FEM2D::FEM2D(const Mesh2D& FEmesh, const int order)
     // Create p-1 equally spaced nodes along the line passing through A1,A2
     for (int i = 0; i < p - 1; ++i)
     {
-      const real t = (real)(i + 1) / p;
+      const real t = (i + 1.0) / p;
 #pragma warning(suppress: 6386)
       FENodes[mesh.numNodes + e * (p - 1) + i].x = (1 - t) * A1.x + t * A2.x;
       FENodes[mesh.numNodes + e * (p - 1) + i].y = (1 - t) * A1.y + t * A2.y;
@@ -70,7 +70,7 @@ FEM2D::FEM2D(const Mesh2D& FEmesh, const int order)
     const MeshNode2D& A2 = mesh(K, 1);
     const MeshNode2D& A3 = mesh(K, 2);
 
-    // Create transformation matrix
+    // Create transformation matrix from reference domain to K
     Matrix B = Matrix(2);
     B[0][0] = A2.x - A1.x;
     B[0][1] = A3.x - A1.x;
@@ -94,8 +94,6 @@ FEM2D::FEM2D(const Mesh2D& FEmesh, const int order)
         ++localNodeIndex;
       }
   }
-
-  printArray(connectivityMatrix, mesh.size, (order + 2) * (order + 1) / 2);
 }
 
 FEM2D::FEM2D(FEM2D&& other) noexcept

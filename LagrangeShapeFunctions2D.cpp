@@ -12,12 +12,10 @@ real lagrangeShapeFunction2D(const real x, const real y,
   const MeshNode2D& A2 = fem.mesh(K, 1);
   const MeshNode2D& A3 = fem.mesh(K, 2);
 
-  // Create transformation matrix
+  // Create transformation matrix from reference domain to K
   Matrix B = Matrix(2);
-  B[0][0] = A2.x - A1.x;
-  B[0][1] = A3.x - A1.x;
-  B[1][0] = A2.y - A1.y;
-  B[1][1] = A3.y - A1.y;
+  B[0][0] = A2.x - A1.x;  B[0][1] = A3.x - A1.x;
+  B[1][0] = A2.y - A1.y;  B[1][1] = A3.y - A1.y;
 
   // Invert matrix
   const real determinant = B[0][0] * B[1][1] - B[0][1] * B[1][0];

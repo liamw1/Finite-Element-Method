@@ -73,10 +73,10 @@ void Matrix::removeRowAndCol(const int index)
 Matrix Matrix::subMatrix(const int index) const
 {
   Matrix subMatrix = Matrix(n - 1);
-  for (int i = 0; i < n; ++i)
+  for (int i = 1; i < n; ++i)
     for (int j = 0; j < n; ++j)
-      if (i != index && j != index)
-        subMatrix[i - (i > index)][j - (j > index)] = entries[i][j];
+      if (j != index)
+        subMatrix[i - 1][j - (j > index)] = entries[i][j];
 
   return subMatrix;
 }
@@ -114,7 +114,7 @@ real Matrix::determinant(const Matrix& M) const
   {
     real sum = 0;
     for (int i = 0; i < M.size(); ++i)
-      sum += (i % 2 ? -1 : 1) * determinant(M.subMatrix(i));
+      sum += (i % 2 ? -1 : 1) * M[0][i] * determinant(M.subMatrix(i));
     return sum;
   }
 }

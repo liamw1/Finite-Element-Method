@@ -36,7 +36,7 @@ public:
   void removeRowAndCol(const int index);
 
   /*
-    \returns the submatrix resulting from the removal of the specified row and column
+    \returns the submatrix resulting from the removal of the first row and specified column
   */
   Matrix subMatrix(const int index) const;
 
