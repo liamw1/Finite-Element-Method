@@ -19,3 +19,8 @@ enum class BC_Type
   Natural = -1,
   Essential = 0
 };
+
+enum class MeshType
+{
+  Triangular = 3
+};

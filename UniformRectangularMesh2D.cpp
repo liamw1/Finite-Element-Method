@@ -2,16 +2,15 @@
 #include "UniformRectangularMesh2D.h"
 
 UniformRectangularMesh2D::UniformRectangularMesh2D(const real xMin, const real xMax, const real yMin, const real yMax, const int nx, const int ny)
-  : Mesh2D(2 * nx * ny),
-    numNodes((nx + 1) * (ny + 1)),
-    numEdges(5 + 4 * (nx + ny - 2) + 3 * (nx - 1) * (ny - 1)),
-    connectivityMatrix(Array2D<int>(size, 3)),
-    edgeArray(Array2D<int>(numEdges, 2)),
-    edgeTypeMatrix(Array2D<int>(numNodes, numNodes)),
-    edgeMatrix(Array2D<int>(numNodes, numNodes))
+  : Mesh2D(2 * nx * ny, (nx + 1)* (ny + 1), 5 + 4 * (nx + ny - 2) + 3 * (nx - 1) * (ny - 1))
 {
   // Debug
   ASSERT(size > 0, "Invalid mesh size: A mesh must have a least one element!");
+
+  connectivityMatrix = Array2D<int>(size, 3);
+  edgeArray = Array2D<int>(numEdges, 2);
+  edgeTypeMatrix = Array2D<int>(numNodes, numNodes);
+  edgeMatrix = Array2D<int>(numNodes, numNodes);
 
   const real dx = (xMax - xMin) / nx;
   const real dy = (yMax - yMin) / ny;
@@ -88,16 +87,8 @@ UniformRectangularMesh2D::UniformRectangularMesh2D(const real xMin, const real x
 }
 
 UniformRectangularMesh2D::UniformRectangularMesh2D(UniformRectangularMesh2D&& other) noexcept
-  : Mesh2D(other.size),
-    numNodes(other.numNodes),
-    numEdges(other.numEdges),
-    connectivityMatrix(std::move(other.connectivityMatrix)),
-    edgeArray(std::move(other.edgeArray)),
-    edgeTypeMatrix(std::move(other.edgeTypeMatrix)),
-    edgeMatrix(std::move(other.edgeMatrix))
+  : Mesh2D(other.size, other.numNodes, other.numEdges)
 {
-  meshNodes = other.meshNodes;
-  other.meshNodes = nullptr;
 }
 
 MeshNode2D UniformRectangularMesh2D::operator()(const int elementIndex, const int nodeIndex) const

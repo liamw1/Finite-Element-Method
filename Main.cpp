@@ -7,15 +7,13 @@
 
 int main()
 {
-  const int K = 2;
-  const int j = 5;
-  const int d_x = 0;
-  const int d_y = 0;
-  const int n = 20;
+  const int p = 3;
+  const int nx = 1;
+  const int ny = 1;
 
-  UniformRectangularMesh2D mesh = UniformRectangularMesh2D(0, 1, 0.5, 1.1, 2, 2);
-  FEM2D fem = FEM2D(mesh, 2);
+  UniformRectangularMesh2D mesh = UniformRectangularMesh2D(0, p * nx , 0, p * ny, nx, ny);
+  FEM2D fem = FEM2D(mesh, p);
 
-  print("(", mesh(K, 0).x, ", ", mesh(K, 0).y, "), (", mesh(K, 1).x, ", ", mesh(K, 1).y, "), (", mesh(K, 2).x, ", ", mesh(K, 2).y, ")");
-  plotShapeFunction(fem, K, j, d_x, d_y, n);
+  for (int i = 0; i < fem.Ng; ++i)
+    print("(", fem.FENodes[i].x, ", ", fem.FENodes[i].y, ")");
 }

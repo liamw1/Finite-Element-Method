@@ -13,7 +13,7 @@ public:
   const int Ng; // Number of FE nodes
   const int Nu; // Number of non-boundary FE nodes
   std::vector<int> boundaryIndices{};  // Indices of all boundary nodes, must be ordered!
-  FENode1D* FENodes; // Stores x-values of all finite element nodes
+  FENode1D* FENodes; // Stores all finite element nodes
 
   FEM1D() = delete;
 

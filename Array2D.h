@@ -15,7 +15,10 @@ template<typename T>
 class Array2D
 {
 public:
-  Array2D() = delete;
+  Array2D()
+    : Array2D(0, 0)
+  {
+  }
 
   Array2D(const int size1, const int size2)
     : container(Container<T>(size1, size2))
