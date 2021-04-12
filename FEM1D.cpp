@@ -46,7 +46,7 @@ FEM1D::FEM1D(const Mesh1D& FEmesh, const int order)
     boundaryIndices.emplace_back(meshSize * p);
 }
 
-FEM1D::FEM1D(const Mesh1D& FEmesh, const int order, realFunction initialCondition)
+FEM1D::FEM1D(const Mesh1D& FEmesh, const int order, real1DFunction initialCondition)
   : FEM1D(FEmesh, order)
 {
   const auto& f = initialCondition;
@@ -180,7 +180,6 @@ void FEM1D::plot(const int n, const int derivativeOrder) const
 {
   std::ofstream file("Out.txt");
   for (int K = 0; K < meshSize; ++K)
-  {
     for (int i = 0; i < n; ++i)
     {
       const real& xL = mesh(K, EdgeType::Left).x;
@@ -189,8 +188,8 @@ void FEM1D::plot(const int n, const int derivativeOrder) const
 
       file << x << ", " << evaluate(x, K, derivativeOrder) << std::endl;
     }
-  }
   file.close();
+  std::cout << "Data written to \"Out.txt\".  Press any key to continue" << std::endl;
   std::cin.get();
   remove("Out.txt");
 }

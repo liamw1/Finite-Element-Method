@@ -1,7 +1,7 @@
 #include "Precompilied.h"
 #include "Integration.h"
 
-real definiteIntegralSimpson(realFunction f, const real a, const real b)
+real definiteIntegralSimpson(real1DFunction f, const real a, const real b)
 {
   real h = (b - a) / N;
   real sum = 0.0;

@@ -29,8 +29,34 @@ real lagrangeShapeFunction2D(const real x, const real y,
 
   const real tx = B[0][0] * (x - A1.x) + B[0][1] * (y - A1.y);
   const real ty = B[1][0] * (x - A1.x) + B[1][1] * (y - A1.y);
-  ASSERT(tx > -1.0 * TOLERANCE && ty >= -1.0 * TOLERANCE && ty < 1.0 - tx + TOLERANCE, "(tx, ty) is not inside the reference domain");
-  switch (fem.polynomialOrder)
+  ASSERT(tx > -1.0 * TOLERANCE && ty > -1.0 * TOLERANCE && ty < 1.0 - tx + TOLERANCE, "(tx, ty) is not inside the reference domain");
+  
+  if (xDerivativeOrder == 0 && yDerivativeOrder == 0)
+    return refLagrangePolynomial2D(tx, ty, fem.polynomialOrder, j, 0, 0);
+  else if (xDerivativeOrder == 1 && yDerivativeOrder == 0)
+  {
+    return B[0][0] * refLagrangePolynomial2D(tx, ty, fem.polynomialOrder, j, 1, 0)
+      + B[1][0] * refLagrangePolynomial2D(tx, ty, fem.polynomialOrder, j, 0, 1);
+  }
+  else if (xDerivativeOrder == 0 && yDerivativeOrder == 1)
+  {
+    return B[0][1] * refLagrangePolynomial2D(tx, ty, fem.polynomialOrder, j, 1, 0)
+      + B[1][1] * refLagrangePolynomial2D(tx, ty, fem.polynomialOrder, j, 0, 1);
+  }
+  else
+  {
+    LOG("Derivative order not implemented", LogLevel::Error);
+    return 0.0;
+  }
+}
+
+real refLagrangePolynomial2D(const real tx, const real ty,
+                             const int polynomialOrder, const int shapeIndex,
+                             const int xDerivativeOrder, const int yDerivativeOrder)
+{
+  const int& j = shapeIndex;
+
+  switch (polynomialOrder)
   {
   case 1:
     return refDegree1LagrangePolynomial2D(tx, ty, j, xDerivativeOrder, yDerivativeOrder);
@@ -297,6 +323,7 @@ void plotShapeFunction(const FEM2D& fem, const int elementIndex, const int shape
       file << x << ", " << y << ", " << f << std::endl;
     }
   file.close();
+  std::cout << "Data written to \"Plot.txt\".  Press any key to continue" << std::endl;
   std::cin.get();
   remove("Plot.txt");
 }

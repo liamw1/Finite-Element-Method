@@ -3,7 +3,7 @@
 
 static real identityFunction(real x) { return 1.0; }
 
-Vector FE_LoadVector1D(const FEM1D& fem, realFunction f, const int n_gq, const int derivativeOrder)
+Vector FE_LoadVector1D(const FEM1D& fem, real1DFunction f, const int n_gq, const int derivativeOrder)
 {
   Vector b = Vector(fem.Ng);
   for (int K = 0; K < fem.meshSize; ++K)
@@ -17,7 +17,7 @@ Vector FE_LoadVector1D(const FEM1D& fem, realFunction f, const int n_gq, const i
       real innerProduct = 0.0;
       for (int i = 0; i < n_gq; ++i)
       {
-        const real x = GLnodes[i];
+        const real& x = GLnodes[i];
         const real integrand = f(x) * lagrangeShapeFunction1D(x, fem, K, j, derivativeOrder);
         innerProduct += GLweights[i] * integrand;
       }
@@ -27,22 +27,12 @@ Vector FE_LoadVector1D(const FEM1D& fem, realFunction f, const int n_gq, const i
   return b;
 }
 
-Matrix FE_MassMatrix1D(const FEM1D& fem, const int n_gq, const int derivativeOrder)
-{
-  return FE_MassMatrix1D(fem, identityFunction, n_gq, derivativeOrder, derivativeOrder);
-}
-
-Matrix FE_MassMatrix1D(const FEM1D& fem, const int n_gq, const int derivativeOrder1, const int derivativeOrder2)
-{
-  return FE_MassMatrix1D(fem, identityFunction, n_gq, derivativeOrder1, derivativeOrder2);
-}
-
-Matrix FE_MassMatrix1D(const FEM1D& fem, realFunction a, const int n_gq, const int derivativeOrder)
+Matrix FE_MassMatrix1D(const FEM1D& fem, real1DFunction a, const int n_gq, const int derivativeOrder)
 {
   return FE_MassMatrix1D(fem, a, n_gq, derivativeOrder, derivativeOrder);
 }
 
-Matrix FE_MassMatrix1D(const FEM1D& fem, realFunction a, const int n_gq, const int derivativeOrder1, const int derivativeOrder2)
+Matrix FE_MassMatrix1D(const FEM1D& fem, real1DFunction a, const int n_gq, const int derivativeOrder1, const int derivativeOrder2)
 {
   Matrix M = Matrix(fem.Ng);
   for (int K = 0; K < fem.meshSize; ++K)
@@ -57,7 +47,7 @@ Matrix FE_MassMatrix1D(const FEM1D& fem, realFunction a, const int n_gq, const i
         real innerProduct = 0.0;
         for (int k = 0; k < n_gq; ++k)
         {
-          const real x = GLnodes[k];
+          const real& x = GLnodes[k];
           const real integrand = a(x) * lagrangeShapeFunction1D(x, fem, K, i, derivativeOrder1)
             * lagrangeShapeFunction1D(x, fem, K, j, derivativeOrder2);
           innerProduct += GLweights[k] * integrand;
@@ -68,13 +58,78 @@ Matrix FE_MassMatrix1D(const FEM1D& fem, realFunction a, const int n_gq, const i
   return M;
 }
 
-void L2_Projection(FEM1D& fem, realFunction f, const int n_gq, const int derivativeOrder)
+void L2_Projection1D(FEM1D& fem, real1DFunction f, const int n_gq, const int derivativeOrder)
 {
-  Matrix M = FE_MassMatrix1D(fem, n_gq, derivativeOrder);
+  Matrix M = FE_MassMatrix1D(fem, identityFunction, n_gq, derivativeOrder);
   Vector b = FE_LoadVector1D(fem, f, n_gq, derivativeOrder);
   Vector coefficients = solve(M, b);
 
   for (int K = 0; K < fem.meshSize; ++K)
     for (int j = 0; j < fem.polynomialOrder + 1; ++j)
       fem(K, j).u = coefficients[fem[K][j]];
+}
+
+Vector FE_LoadVector2D(FEM2D& fem, real2DFunction f, const int n_gq, const int xDerivativeOrder, const int yDerivativeOrder)
+{
+  const int& p = fem.polynomialOrder;
+
+  Vector b = Vector(fem.Ng);
+  for (int K = 0; K < fem.mesh.size; ++K)
+  {
+    std::vector<std::array<real, 2>> GLnodes = gauss2DNodesLocal(fem.mesh, K, n_gq);
+    std::vector<real> GLweights = gauss2DWeightsLocal(fem.mesh, K, n_gq);
+
+    for (int j = 0; j < (p + 1) * (p + 2) / 2; ++j)
+    {
+      // Calculate inner product between f and j-th shape function on K
+      real innerProduct = 0.0;
+      for (int i = 0; i < n_gq; ++i)
+      {
+        const real& x = GLnodes[i][0];
+        const real& y = GLnodes[i][1];
+        const real integrand = f(x, y) * lagrangeShapeFunction2D(x, y, fem, K, j, xDerivativeOrder, yDerivativeOrder);
+        innerProduct += GLweights[i] * integrand;
+      }
+      b[fem[K][j]] += innerProduct; // Accumulate to b
+    }
+  }
+  return b;
+}
+
+Matrix FE_MassMatrix2D(const FEM2D& fem, real2DFunction a, const int n_gq, const int xDerivativeOrder, const int yDerivativeOrder)
+{
+  return FE_MassMatrix2D(fem, a, n_gq, xDerivativeOrder, yDerivativeOrder, xDerivativeOrder, yDerivativeOrder);
+}
+
+Matrix FE_MassMatrix2D(const FEM2D& fem,
+                       real2DFunction a,
+                       const int n_gq,
+                       const int xDerivativeOrder1, const int yDerivativeOrder1,
+                       const int xDerivativeOrder2, const int yDerivativeOrder2)
+{
+  const int& p = fem.polynomialOrder;
+
+  Matrix M = Matrix(fem.Ng);
+  for (int K = 0; K < fem.mesh.size; ++K)
+  {
+    std::vector<std::array<real, 2>> GLnodes = gauss2DNodesLocal(fem.mesh, K, n_gq);
+    std::vector<real> GLweights = gauss2DWeightsLocal(fem.mesh, K, n_gq);
+
+    for (int i = 0; i < (p + 1) * (p + 2) / 2; ++i)
+      for (int j = 0; j < (p + 1) * (p + 2) / 2; ++j)
+      {
+        // Calculate the inner product between the i-th and j-th shape function on K
+        real innerProduct = 0.0;
+        for (int k = 0; k < n_gq; ++k)
+        {
+          const real& x = GLnodes[k][0];
+          const real& y = GLnodes[k][1];
+          const real integrand = a(x, y) * lagrangeShapeFunction2D(x, y, fem, K, i, xDerivativeOrder1, yDerivativeOrder1)
+            * lagrangeShapeFunction2D(x, y, fem, K, j, xDerivativeOrder2, yDerivativeOrder2);
+          innerProduct += GLweights[k] * integrand;
+        }
+        M[fem[K][i]][fem[K][j]] += innerProduct; // Accumulate to M
+      }
+  }
+  return M;
 }

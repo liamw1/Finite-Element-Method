@@ -29,7 +29,7 @@ public:
 
     Will use Lagrange interpolation to approximate the initial condition function.
   */
-  FEM1D(const Mesh1D& mesh, const int order, realFunction initialCondition);
+  FEM1D(const Mesh1D& mesh, const int order, real1DFunction initialCondition);
 
   /*
     Move constructor.
@@ -65,17 +65,9 @@ public:
     \returns the numerical approximation u_h(x).
 
     Note: This function is ineffiecient, as it searches for the element
-    that x is in.  If the element is known, use other evaluate function.
+    that x belongs to.  If the element is known, use other evaluate function.
   */
   real evaluate(const real x) const;
-
-  /*
-    \returns the numerical approximation u_h(x) for a given 
-    derivative order.
-
-    Note: This function is ineffiecient, as it searches for the element
-    that x is in.  If the element is known, use other evaluate function.
-  */
   real evaluate(const real x, const int derivativeOrder) const;
   
   /*

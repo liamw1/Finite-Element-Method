@@ -1,7 +1,7 @@
 #include "Precompilied.h"
 #include "ABCF.h"
 
-ABCF::ABCF(realFunction aFunc, realFunction bFunc, realFunction cFunc, realFunction fFunc, realFunction naturalBoundaryCondition)
+ABCF::ABCF(real1DFunction aFunc, real1DFunction bFunc, real1DFunction cFunc, real1DFunction fFunc, real1DFunction naturalBoundaryCondition)
   : a(aFunc), b(bFunc), c(cFunc), f(fFunc), naturalBC(naturalBoundaryCondition)
 {
 }

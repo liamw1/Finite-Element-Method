@@ -12,7 +12,7 @@ class ABCF : public EquationSystem1D
 public:
   ABCF() = delete;
 
-  ABCF(realFunction aFunc, realFunction bFunc, realFunction cFunc, realFunction fFunc, realFunction naturalBoundaryCondition);
+  ABCF(real1DFunction aFunc, real1DFunction bFunc, real1DFunction cFunc, real1DFunction fFunc, real1DFunction naturalBoundaryCondition);
 
   /*
     \returns coefficients of FE approximation u_h.
@@ -25,6 +25,6 @@ public:
   Vector solveSystem(const FEM1D& fem, const int n_gq) const override;
 
 private:
-  realFunction a, b, c, f;
-  realFunction naturalBC;
+  real1DFunction a, b, c, f;
+  real1DFunction naturalBC;
 };

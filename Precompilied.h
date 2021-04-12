@@ -3,7 +3,8 @@
 #include "Log.h"
 
 using real = double;
-using realFunction = real(*)(real);
+using real1DFunction = real(*)(real);
+using real2DFunction = real(*)(real, real);
 
 // Important constants
 constexpr real PI = 3.14159265358979323846;

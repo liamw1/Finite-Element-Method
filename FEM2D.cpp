@@ -1,4 +1,5 @@
 #include "FEM2D.h"
+#include "LagrangeShapeFunctions2D.h"
 
 FEM2D::FEM2D(const Mesh2D& FEmesh, const int order)
   : mesh(FEmesh),
@@ -43,8 +44,8 @@ FEM2D::FEM2D(const Mesh2D& FEmesh, const int order)
   for (int K = 0; K < mesh.size; ++K)
   {
     int e = 0;
-    for (int i = 0; i < 3; ++i)
-      for (int j = i + 1; j < 3; ++j)
+    for (int i = 1; i < 3; ++i)
+      for (int j = i - 1; j >= 0; --j)
       {
         // Grab indices of potential edge-forming nodes
         const int& I = mesh.connectivityMatrix[K][i];
@@ -96,6 +97,16 @@ FEM2D::FEM2D(const Mesh2D& FEmesh, const int order)
   }
 }
 
+FEM2D::FEM2D(const Mesh2D& FEmesh, const int order, real2DFunction initialCondition)
+  : FEM2D(FEmesh, order)
+{
+  const auto& f = initialCondition;
+
+  // Interpolate initialCondition
+  for (int i = 0; i < Ng; ++i)
+    FENodes[i].u = f(FENodes[i].x, FENodes[i].y);
+}
+
 FEM2D::FEM2D(FEM2D&& other) noexcept
   : mesh(other.mesh),
     polynomialOrder(other.polynomialOrder),
@@ -104,4 +115,126 @@ FEM2D::FEM2D(FEM2D&& other) noexcept
 {
   FENodes = other.FENodes;
   other.FENodes = nullptr;
+}
+
+const Container<int>& FEM2D::operator[](const int elementIndex) const
+{
+  // Debug
+  ASSERT(elementIndex >= 0, "Element index must be non-negative");
+  ASSERT(elementIndex < mesh.size, "Element index must be less than the number of elements");
+
+  return connectivityMatrix[elementIndex];
+}
+
+real FEM2D::evaluate(const real x, const real y) const
+{
+  return evaluate(x, y, 0, 0);
+}
+
+real FEM2D::evaluate(const real x, const real y, const int xDerivativeOrder, const int yDerivativeOrder) const
+{
+  // Search for element that x is an element of
+  int K = -1;
+  for (int i = 0; i < mesh.size; ++i)
+    if (isInTriangle(x, y, i))
+    {
+      K = i;
+      break;
+    }
+  ASSERT(K >= 0, "x must be in the domain of the mesh");
+
+  // Evaluate at x
+  return evaluate(x, y, K, xDerivativeOrder, yDerivativeOrder);
+}
+
+real FEM2D::evaluate(const real x, const real y, const int elementIndex, const int xDerivativeOrder, const int yDerivativeOrder) const
+{
+  const int& K = elementIndex;
+  const int& p = polynomialOrder;
+
+  // Debug
+  ASSERT(K >= 0, "Element index must be non-negative");
+  ASSERT(K < mesh.size, "Element index must be less than the number of elements");
+  ASSERT(isInTriangle(x, y, K), "x must be in the element at the specified elementIndex");
+
+  real sum = 0.0;
+  for (int j = 0; j < (p + 1) * (p + 2) / 2; ++j)
+  {
+    const int& i = connectivityMatrix[K][j];
+    sum += FENodes[i].u * lagrangeShapeFunction2D(x, y, *this, K, j, xDerivativeOrder, yDerivativeOrder);
+  }
+  return sum;
+}
+
+void FEM2D::plot(const int n) const
+{
+  plot(n, 0, 0);
+}
+
+void FEM2D::plot(const int n, const int xDerivativeOrder, const int yDerivativeOrder) const
+{
+  std::ofstream file("Plot.txt");
+
+  for (int K = 0; K < mesh.size; ++K)
+  {
+    const MeshNode2D& A1 = mesh(K, 0);
+    const MeshNode2D& A2 = mesh(K, 1);
+    const MeshNode2D& A3 = mesh(K, 2);
+
+    // Create transformation matrix
+    Matrix B = Matrix(2);
+    B[0][0] = A2.x - A1.x;
+    B[0][1] = A3.x - A1.x;
+    B[1][0] = A2.y - A1.y;
+    B[1][1] = A3.y - A1.y;
+
+    for (int i = 0; i <= n; ++i)
+      for (int j = 0; j <= n - i; ++j)
+      {
+        // Create reference points
+        const real tx = (real)i / n;
+        const real ty = (real)j / n;
+
+        // Transform points from reference domain to element K
+        const real x = B[0][0] * tx + B[0][1] * ty + A1.x;
+        const real y = B[1][0] * tx + B[1][1] * ty + A1.y;
+
+        file << x << ", " << y << ", " << evaluate(x, y, K, xDerivativeOrder, yDerivativeOrder) << std::endl;
+      }
+  }
+  file.close();
+  std::cout << "Data written to \"Plot.txt\".  Press any key to continue" << std::endl;
+  std::cin.get();
+  remove("Plot.txt");
+}
+
+bool FEM2D::isInTriangle(const real x, const real y, const int elementIndex) const
+{
+  const int& K = elementIndex;
+  const MeshNode2D& A1 = mesh(K, 0);
+  const MeshNode2D& A2 = mesh(K, 1);
+  const MeshNode2D& A3 = mesh(K, 2);
+
+  // Create transformation matrix from reference domain to K
+  Matrix B = Matrix(2);
+  B[0][0] = A2.x - A1.x;  B[0][1] = A3.x - A1.x;
+  B[1][0] = A2.y - A1.y;  B[1][1] = A3.y - A1.y;
+
+  // Invert matrix
+  const real determinant = B[0][0] * B[1][1] - B[0][1] * B[1][0];
+  ASSERT(determinant != 0.0, "Transformation matrix is singular");
+  real temp = B[0][0];
+  B[0][0] = B[1][1];
+  B[1][1] = temp;
+  B[0][1] *= -1;
+  B[1][0] *= -1;
+  B /= determinant;
+
+  const real tx = B[0][0] * (x - A1.x) + B[0][1] * (y - A1.y);
+  const real ty = B[1][0] * (x - A1.x) + B[1][1] * (y - A1.y);
+
+  if (tx > -1.0 * TOLERANCE && ty > -1.0 * TOLERANCE && ty < 1.0 - tx + TOLERANCE)
+    return true;
+  else
+    return false;
 }

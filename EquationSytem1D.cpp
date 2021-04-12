@@ -1,7 +1,7 @@
 #include "Precompilied.h"
 #include "EquationSytem1D.h"
 
-Vector constructNaturalBoundaryVector(const FEM1D& fem, realFunction naturalBC)
+Vector constructNaturalBoundaryVector(const FEM1D& fem, real1DFunction naturalBC)
 {
   Vector bc_n = Vector(fem.Ng);
   for (int K = 0; K < fem.meshSize; ++K)
