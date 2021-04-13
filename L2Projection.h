@@ -46,9 +46,8 @@ Matrix FE_MassMatrix1D(const FEM1D& fem, real1DFunction a, const int n_gq, const
   Performs and L2 projection on FEM1D for a function f.
 
   \param n_gq: Number of Gaussian quadrature nodes.
-  \param derivativeOrder: Order of derivative on the Lagrange shape functions.
 */
-void L2_Projection1D(FEM1D& fem, real1DFunction f, const int n_gq, const int derivativeOrder);
+void L2_Projection1D(FEM1D& fem, real1DFunction f, const int n_gq);
 
 
 
@@ -88,3 +87,10 @@ Matrix FE_MassMatrix2D(const FEM2D& fem,
                        const int n_gq, 
                        const int xDerivativeOrder1, const int yDerivativeOrder1, 
                        const int xDerivativeOrder2, const int yDerivativeOrder2);
+
+/*
+  Performs and L2 projection on FEM2D for a function f.
+
+  \param n_gq: Number of Gaussian quadrature nodes.
+*/
+void L2_Projection2D(FEM2D& fem, real2DFunction f, const int n_gq);

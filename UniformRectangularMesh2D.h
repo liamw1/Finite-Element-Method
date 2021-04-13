@@ -27,7 +27,7 @@ public:
 
   UniformRectangularMesh2D& operator=(UniformRectangularMesh2D& other) = delete;
 
-  MeshNode2D operator()(const int elementIndex, const int nodeIndex) const;
+  MeshNode2D operator()(const int elementIndex, const int nodeIndex) const override;
 
 private:
 };

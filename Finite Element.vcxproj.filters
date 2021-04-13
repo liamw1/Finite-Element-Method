@@ -50,6 +50,9 @@
     <Filter Include="EquationSystems\1D">
       <UniqueIdentifier>{331f6e02-5c30-432b-9ce3-865718ff2be8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Apps\Homework 8">
+      <UniqueIdentifier>{0f49bed1-a0bf-45e2-a4cb-41a21fac2573}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Integration.cpp">
@@ -128,6 +131,12 @@
     </ClCompile>
     <ClCompile Include="FEM2D.cpp">
       <Filter>Meshing\2D</Filter>
+    </ClCompile>
+    <ClCompile Include="UnstructuredMesh2D.cpp">
+      <Filter>Meshing\2D</Filter>
+    </ClCompile>
+    <ClCompile Include="Hwk8_C1.cpp">
+      <Filter>Apps\Homework 8</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -221,6 +230,12 @@
     </ClInclude>
     <ClInclude Include="FEM2D.h">
       <Filter>Meshing\2D</Filter>
+    </ClInclude>
+    <ClInclude Include="UnstructuredMesh2D.h">
+      <Filter>Meshing\2D</Filter>
+    </ClInclude>
+    <ClInclude Include="Hwk8_C1.h">
+      <Filter>Apps\Homework 8</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

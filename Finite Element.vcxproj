@@ -120,6 +120,8 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>FE_DEBUG=1;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>Precompilied.h</PrecompiledHeaderFile>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -134,6 +136,8 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>Precompilied.h</PrecompiledHeaderFile>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -151,10 +155,18 @@
     <ClCompile Include="Hwk4_C2.cpp" />
     <ClCompile Include="Hwk4_C3.cpp" />
     <ClCompile Include="Hwk6_B2.cpp" />
+    <ClCompile Include="Hwk8_C1.cpp" />
     <ClCompile Include="LagrangeShapeFunctions2D.cpp" />
     <ClCompile Include="Mesh1D.cpp" />
     <ClCompile Include="Mesh2D.cpp" />
-    <ClCompile Include="Precompilied.cpp" />
+    <ClCompile Include="Precompilied.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </PrecompiledHeaderFile>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </PrecompiledHeaderFile>
+    </ClCompile>
     <ClCompile Include="Print.cpp" />
     <ClCompile Include="ErrorAnalysis.cpp" />
     <ClCompile Include="FEM1D.cpp" />
@@ -168,6 +180,7 @@
     <ClCompile Include="Timer.cpp" />
     <ClCompile Include="UniformMesh1D.cpp" />
     <ClCompile Include="UniformRectangularMesh2D.cpp" />
+    <ClCompile Include="UnstructuredMesh2D.cpp" />
     <ClCompile Include="Updater.cpp" />
     <ClCompile Include="Vector.cpp" />
   </ItemGroup>
@@ -182,6 +195,7 @@
     <ClInclude Include="Hwk4_C2.h" />
     <ClInclude Include="Hwk4_C3.h" />
     <ClInclude Include="Hwk6_B2.h" />
+    <ClInclude Include="Hwk8_C1.h" />
     <ClInclude Include="LagrangeShapeFunctions2D.h" />
     <ClInclude Include="Mesh1D.h" />
     <ClInclude Include="Container.h" />
@@ -201,6 +215,7 @@
     <ClInclude Include="Timer.h" />
     <ClInclude Include="UniformMesh1D.h" />
     <ClInclude Include="UniformRectangularMesh2D.h" />
+    <ClInclude Include="UnstructuredMesh2D.h" />
     <ClInclude Include="Updater.h" />
     <ClInclude Include="Vector.h" />
   </ItemGroup>

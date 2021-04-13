@@ -1,3 +1,4 @@
+#include "Precompilied.h"
 #include "Mesh2D.h"
 
 Mesh2D::Mesh2D(const int n, const int nodes, const int edges)

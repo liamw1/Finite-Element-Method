@@ -1,3 +1,4 @@
+#include "Precompilied.h"
 #include "Log.h"
 
 static std::vector<std::pair<std::string, int>> errors;

@@ -44,6 +44,13 @@ public:
   const Container<int>& operator[](const int elementIndex) const;
 
   /*
+    \returns the FE node at the specified indices.
+
+    \param nodeIndex: Index of the nodes within a particular element.
+  */
+  FENode2D& operator()(const int elementIndex, const int nodeIndex) const;
+
+  /*
     \returns the numerical approximation u_h(x, y).
 
     Note: This function is ineffiecient, as it searches for the element

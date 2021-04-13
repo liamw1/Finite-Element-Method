@@ -1,7 +1,8 @@
 #include "Precompilied.h"
 #include "L2Projection.h"
 
-static real identityFunction(real x) { return 1.0; }
+static real identityFunction1D(real x) { return 1.0; }
+static real identityFunction2D(real x, real y) { return 1.0; }
 
 Vector FE_LoadVector1D(const FEM1D& fem, real1DFunction f, const int n_gq, const int derivativeOrder)
 {
@@ -58,10 +59,10 @@ Matrix FE_MassMatrix1D(const FEM1D& fem, real1DFunction a, const int n_gq, const
   return M;
 }
 
-void L2_Projection1D(FEM1D& fem, real1DFunction f, const int n_gq, const int derivativeOrder)
+void L2_Projection1D(FEM1D& fem, real1DFunction f, const int n_gq)
 {
-  Matrix M = FE_MassMatrix1D(fem, identityFunction, n_gq, derivativeOrder);
-  Vector b = FE_LoadVector1D(fem, f, n_gq, derivativeOrder);
+  Matrix M = FE_MassMatrix1D(fem, identityFunction1D, n_gq, 0);
+  Vector b = FE_LoadVector1D(fem, f, n_gq, 0);
   Vector coefficients = solve(M, b);
 
   for (int K = 0; K < fem.meshSize; ++K)
@@ -132,4 +133,17 @@ Matrix FE_MassMatrix2D(const FEM2D& fem,
       }
   }
   return M;
+}
+
+void L2_Projection2D(FEM2D& fem, real2DFunction f, const int n_gq)
+{
+  const int& p = fem.polynomialOrder;
+
+  Matrix M = FE_MassMatrix2D(fem, identityFunction2D, n_gq, 0, 0);
+  Vector b = FE_LoadVector2D(fem, f, n_gq, 0, 0);
+  Vector coefficients = solve(M, b);
+
+  for (int K = 0; K < fem.mesh.size; ++K)
+    for (int j = 0; j < (p + 1) * (p + 2) / 2; ++j)
+      fem(K, j).u = coefficients[fem[K][j]];
 }

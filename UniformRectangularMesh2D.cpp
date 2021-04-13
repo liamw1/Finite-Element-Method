@@ -7,6 +7,8 @@ UniformRectangularMesh2D::UniformRectangularMesh2D(const real xMin, const real x
   // Debug
   ASSERT(size > 0, "Invalid mesh size: A mesh must have a least one element!");
 
+  // Initialize data structures
+  meshNodes = new MeshNode2D[numNodes];
   connectivityMatrix = Array2D<int>(size, 3);
   edgeArray = Array2D<int>(numEdges, 2);
   edgeTypeMatrix = Array2D<int>(numNodes, numNodes);
@@ -16,7 +18,6 @@ UniformRectangularMesh2D::UniformRectangularMesh2D(const real xMin, const real x
   const real dy = (yMax - yMin) / ny;
 
   // Set node coordinates
-  meshNodes = new MeshNode2D[numNodes];
   for (int i = 0; i < ny + 1; ++i)
     for (int j = 0; j < nx + 1; ++j)
     {

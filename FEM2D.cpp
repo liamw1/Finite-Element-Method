@@ -1,3 +1,4 @@
+#include "Precompilied.h"
 #include "FEM2D.h"
 #include "LagrangeShapeFunctions2D.h"
 
@@ -124,6 +125,17 @@ const Container<int>& FEM2D::operator[](const int elementIndex) const
   ASSERT(elementIndex < mesh.size, "Element index must be less than the number of elements");
 
   return connectivityMatrix[elementIndex];
+}
+
+FENode2D& FEM2D::operator()(const int elementIndex, const int nodeIndex) const
+{
+  // Debug
+  ASSERT(elementIndex >= 0, "Element index must be non-negative");
+  ASSERT(elementIndex < mesh.size, "Element index must be less than the number of elements");
+  ASSERT(nodeIndex >= 0, "Node index must be non-negative");
+  ASSERT(nodeIndex < (polynomialOrder + 1) * (polynomialOrder + 2) / 2, "Node index must be less than the number of nodes per element");
+
+  return FENodes[connectivityMatrix[elementIndex][nodeIndex]];
 }
 
 real FEM2D::evaluate(const real x, const real y) const
