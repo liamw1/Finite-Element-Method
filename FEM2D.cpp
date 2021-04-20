@@ -21,6 +21,7 @@ FEM2D::FEM2D(const Mesh2D& FEmesh, const int order)
 #pragma warning(suppress: 6386)
     FENodes[n].x = mesh.meshNodes[n].x;
     FENodes[n].y = mesh.meshNodes[n].y;
+    FENodes[n].BC = mesh.meshNodes[n].BC;
   }
   for (int K = 0; K < mesh.size; ++K)
     for (int v = 0; v < 3; ++v)

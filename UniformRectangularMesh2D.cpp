@@ -2,7 +2,8 @@
 #include "UniformRectangularMesh2D.h"
 
 UniformRectangularMesh2D::UniformRectangularMesh2D(const real xMin, const real xMax, const real yMin, const real yMax, const int nx, const int ny)
-  : Mesh2D(2 * nx * ny, (nx + 1)* (ny + 1), 5 + 4 * (nx + ny - 2) + 3 * (nx - 1) * (ny - 1))
+  : Mesh2D(2 * nx * ny, (nx + 1)* (ny + 1), 5 + 4 * (nx + ny - 2) + 3 * (nx - 1) * (ny - 1)),
+    xL(xMin), xR(xMax), yL(yMin), yR(yMax)
 {
   // Debug
   ASSERT(size > 0, "Invalid mesh size: A mesh must have a least one element!");
@@ -88,7 +89,8 @@ UniformRectangularMesh2D::UniformRectangularMesh2D(const real xMin, const real x
 }
 
 UniformRectangularMesh2D::UniformRectangularMesh2D(UniformRectangularMesh2D&& other) noexcept
-  : Mesh2D(other.size, other.numNodes, other.numEdges)
+  : Mesh2D(other.size, other.numNodes, other.numEdges),
+    xL(other.xL), xR(other.xR), yL(other.yL), yR(other.yR)
 {
 }
 
@@ -101,4 +103,28 @@ MeshNode2D UniformRectangularMesh2D::operator()(const int elementIndex, const in
   ASSERT(nodeIndex < 3, "Node index must be less than 3 on a triangular mesh");
 
   return meshNodes[connectivityMatrix[elementIndex][nodeIndex]];
+}
+
+void UniformRectangularMesh2D::setBoundaryConditions(const BC_Type leftBoundaryCondition,
+                                                     const BC_Type rightBoundaryCondition,
+                                                     const BC_Type bottomBoundaryCondition,
+                                                     const BC_Type topBoundaryCondition)
+{
+  // Find edge nodes
+  for (int i = 0; i < numNodes; ++i)
+  {
+    if (meshNodes[i].x == xL)
+      meshNodes[i].BC = leftBoundaryCondition;
+    if (meshNodes[i].x == xR)
+      meshNodes[i].BC = rightBoundaryCondition;
+    if (meshNodes[i].y == yL)
+      meshNodes[i].BC = bottomBoundaryCondition;
+    if (meshNodes[i].y == yR)
+      meshNodes[i].BC = topBoundaryCondition;
+  }
+
+  // Find corner nodes
+  for (int i = 0; i < numNodes; ++i)
+    if ((meshNodes[i].x == xL || meshNodes[i].x == xR) && (meshNodes[i].y == yL || meshNodes[i].y == yR))
+      meshNodes[i].BC = BC_Type::Corner;
 }

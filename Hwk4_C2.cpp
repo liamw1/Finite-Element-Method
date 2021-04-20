@@ -27,11 +27,11 @@ void Hwk4_C2_Driver()
   FEM1D fem = FEM1D(mesh, p);
 
   // Create equation system
-  ABCF equation = ABCF(a, b, c, f, g_n);
+  Elliptic1DABCF equation = Elliptic1DABCF(a, b, c, f, g_n);
 
   // Solve system
   EnforceBoundaryConditions(fem);
-  update(fem, equation, n_gq);
+  update1D(fem, equation, n_gq);
   EnforceBoundaryConditions(fem);
 
   print(fem.evaluate(PI / 7));

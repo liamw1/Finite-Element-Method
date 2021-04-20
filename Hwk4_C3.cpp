@@ -14,7 +14,7 @@ void Hwk4_C3_Driver()
   const int p = 2, n_gq = 3;
 
   // Create equation system
-  ACF equation = ACF(a, c, f, g_n);
+  Elliptic1DACF equation = Elliptic1DACF(a, c, f, g_n);
 
   std::ofstream file1("ErrorRegression.csv");
   std::ofstream file2("DerivativeErrorRegression.csv");
@@ -26,7 +26,7 @@ void Hwk4_C3_Driver()
     FEM1D fem = FEM1D(mesh, p);
 
     // Solve system
-    update(fem, equation, n_gq);
+    update1D(fem, equation, n_gq);
     print(FE_Error1DGlobal(fem, analyticalSolution, n_gq, 0));
 
     // Write regression

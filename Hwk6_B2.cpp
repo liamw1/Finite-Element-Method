@@ -14,7 +14,7 @@ void Hwk6_B2_Driver()
   const int n = 20, p = 1, n_gq = 4;
 
   // Create equation system
-  ACF equation = ACF(a, c, f, g_n);
+  Elliptic1DACF equation = Elliptic1DACF(a, c, f, g_n);
 
   // Create mesh
   UniformMesh1D mesh = UniformMesh1D(xL, xR, n);
@@ -22,7 +22,7 @@ void Hwk6_B2_Driver()
   FEM1D fem = FEM1D(mesh, p);
 
   // Solve system
-  update(fem, equation, n_gq);
+  update1D(fem, equation, n_gq);
   print(fem.evaluate(PI / 6));
   print(FE_Error1DGlobal(fem, analyticalSolution, n_gq, 0));
 }

@@ -10,6 +10,7 @@ Mesh2D::Mesh2D(Mesh2D&& other) noexcept
   : size(other.size),
     numNodes(other.numNodes),
     numEdges(other.numEdges),
+    numBoundaryNodes(other.numBoundaryNodes),
     connectivityMatrix(std::move(other.connectivityMatrix)),
     edgeArray(std::move(other.edgeArray)),
     edgeTypeMatrix(std::move(other.edgeTypeMatrix)),

@@ -3,6 +3,7 @@
 #include "Mesh2D.h"
 #include "Array2D.h"
 #include "Print.h"
+#include "BoundayEnums.h"
 
 /*
   A rectangular 2D mesh consisting of uniform triangular elements.
@@ -29,5 +30,11 @@ public:
 
   MeshNode2D operator()(const int elementIndex, const int nodeIndex) const override;
 
+  void setBoundaryConditions(const BC_Type leftBoundaryCondition,
+                             const BC_Type rightBoundaryCondition,
+                             const BC_Type topBoundaryCondition,
+                             const BC_Type bottomBoundaryCondition);
+
 private:
+  const real xL, xR, yL, yR;
 };

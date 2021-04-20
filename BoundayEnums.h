@@ -17,7 +17,10 @@ enum class BC_Type
 {
   Interior = -200,  // Default value
   Natural = -1,
-  Essential = 0
+  Essential = 0,
+  Dirichlet = 1,
+  Neumann = 2,
+  Corner = 200
 };
 
 enum class MeshType

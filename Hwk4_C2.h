@@ -1,7 +1,7 @@
 #pragma once
 #include "Precompilied.h"
 #include "UniformMesh1D.h"
-#include "ABCF.h"
+#include "Elliptic1DABCF.h"
 #include "Updater.h"
 #include "ErrorAnalysis.h"
 #include "Print.h"

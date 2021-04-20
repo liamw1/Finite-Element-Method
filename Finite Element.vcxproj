@@ -147,9 +147,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="ABCF.cpp" />
-    <ClCompile Include="ACF.cpp" />
-    <ClCompile Include="EquationSytem1D.cpp" />
+    <ClCompile Include="Elliptic1DABCF.cpp" />
+    <ClCompile Include="Elliptic1DACF.cpp" />
+    <ClCompile Include="EquationSystem1D.cpp" />
+    <ClCompile Include="EquationSystem2D.cpp" />
     <ClCompile Include="FEM2D.cpp" />
     <ClCompile Include="Hwk4_C1.cpp" />
     <ClCompile Include="Hwk4_C2.cpp" />
@@ -185,11 +186,13 @@
     <ClCompile Include="Vector.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ABCF.h" />
-    <ClInclude Include="ACF.h" />
+    <ClInclude Include="Elliptic1DABCF.h" />
+    <ClInclude Include="Elliptic1DACF.h" />
     <ClInclude Include="Array2D.h" />
     <ClInclude Include="BoundayEnums.h" />
-    <ClInclude Include="EquationSytem1D.h" />
+    <ClInclude Include="Elliptic2DACF.h" />
+    <ClInclude Include="EquationSystem2D.h" />
+    <ClInclude Include="EquationSystem1D.h" />
     <ClInclude Include="FEM2D.h" />
     <ClInclude Include="Hwk4_C1.h" />
     <ClInclude Include="Hwk4_C2.h" />

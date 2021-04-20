@@ -53,6 +53,9 @@
     <Filter Include="Apps\Homework 8">
       <UniqueIdentifier>{0f49bed1-a0bf-45e2-a4cb-41a21fac2573}</UniqueIdentifier>
     </Filter>
+    <Filter Include="EquationSystems\2D">
+      <UniqueIdentifier>{cd15d308-9050-47f9-b13f-3a5822855ff9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Integration.cpp">
@@ -114,13 +117,13 @@
     <ClCompile Include="UniformRectangularMesh2D.cpp">
       <Filter>Meshing\2D</Filter>
     </ClCompile>
-    <ClCompile Include="ABCF.cpp">
+    <ClCompile Include="Elliptic1DABCF.cpp">
       <Filter>EquationSystems\1D</Filter>
     </ClCompile>
-    <ClCompile Include="ACF.cpp">
+    <ClCompile Include="Elliptic1DACF.cpp">
       <Filter>EquationSystems\1D</Filter>
     </ClCompile>
-    <ClCompile Include="EquationSytem1D.cpp">
+    <ClCompile Include="EquationSystem1D.cpp">
       <Filter>EquationSystems\1D</Filter>
     </ClCompile>
     <ClCompile Include="Gauss-LegendreNodes.cpp">
@@ -138,6 +141,7 @@
     <ClCompile Include="Hwk8_C1.cpp">
       <Filter>Apps\Homework 8</Filter>
     </ClCompile>
+    <ClCompile Include="EquationSystem2D.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Integration.h">
@@ -213,13 +217,13 @@
     <ClInclude Include="UniformRectangularMesh2D.h">
       <Filter>Meshing\2D</Filter>
     </ClInclude>
-    <ClInclude Include="EquationSytem1D.h">
+    <ClInclude Include="EquationSystem1D.h">
       <Filter>EquationSystems\1D</Filter>
     </ClInclude>
-    <ClInclude Include="ABCF.h">
+    <ClInclude Include="Elliptic1DABCF.h">
       <Filter>EquationSystems\1D</Filter>
     </ClInclude>
-    <ClInclude Include="ACF.h">
+    <ClInclude Include="Elliptic1DACF.h">
       <Filter>EquationSystems\1D</Filter>
     </ClInclude>
     <ClInclude Include="Gauss-LegendreNodes.h">
@@ -236,6 +240,12 @@
     </ClInclude>
     <ClInclude Include="Hwk8_C1.h">
       <Filter>Apps\Homework 8</Filter>
+    </ClInclude>
+    <ClInclude Include="EquationSystem2D.h">
+      <Filter>EquationSystems\2D</Filter>
+    </ClInclude>
+    <ClInclude Include="Elliptic2DACF.h">
+      <Filter>EquationSystems\2D</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
