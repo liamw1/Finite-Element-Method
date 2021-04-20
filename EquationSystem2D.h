@@ -13,4 +13,4 @@ public:
   virtual Vector solveSystem(const FEM2D& fem, const int n_gq) const = 0;
 };
 
-Vector constructEssentialBoundaryVector2D(const FEM2D& fem, const Matrix& massMatrix);
+Vector constructBoundaryVector2D(const FEM2D& fem, const Matrix& massMatrix);

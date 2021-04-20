@@ -10,10 +10,10 @@
 class Mesh2D
 {
 public:
-  const int size;           // Number of mesh elements
-  const int numNodes;       // Number of mesh nodes
-  const int numEdges;       // Number of mesh edges
-  int numBoundaryNodes = -1;     // Number of boundary nodes
+  const int size;             // Number of mesh elements
+  const int numNodes;         // Number of mesh nodes
+  const int numEdges;         // Number of mesh edges
+  int numBoundaryNodes = -1;  // Number of boundary nodes
 
   /*
     A 2D array that stores which nodes belong to which mesh element.

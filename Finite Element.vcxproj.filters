@@ -56,6 +56,9 @@
     <Filter Include="EquationSystems\2D">
       <UniqueIdentifier>{cd15d308-9050-47f9-b13f-3a5822855ff9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Apps\Homework 9">
+      <UniqueIdentifier>{e5458ba5-40a2-438d-84a9-21ea03e6cd9c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Integration.cpp">
@@ -141,7 +144,18 @@
     <ClCompile Include="Hwk8_C1.cpp">
       <Filter>Apps\Homework 8</Filter>
     </ClCompile>
-    <ClCompile Include="EquationSystem2D.cpp" />
+    <ClCompile Include="EquationSystem2D.cpp">
+      <Filter>EquationSystems\2D</Filter>
+    </ClCompile>
+    <ClCompile Include="Elliptic2DACF.cpp">
+      <Filter>EquationSystems\2D</Filter>
+    </ClCompile>
+    <ClCompile Include="Elliptic2DABCF.cpp">
+      <Filter>EquationSystems\2D</Filter>
+    </ClCompile>
+    <ClCompile Include="Hwk9_C1.cpp">
+      <Filter>Apps\Homework 9</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Integration.h">
@@ -183,21 +197,9 @@
     <ClInclude Include="Updater.h">
       <Filter>Updater</Filter>
     </ClInclude>
-    <ClInclude Include="Hwk4_C3.h">
-      <Filter>Apps\Homework 4</Filter>
-    </ClInclude>
-    <ClInclude Include="Hwk4_C1.h">
-      <Filter>Apps\Homework 4</Filter>
-    </ClInclude>
-    <ClInclude Include="Hwk4_C2.h">
-      <Filter>Apps\Homework 4</Filter>
-    </ClInclude>
     <ClInclude Include="Precompilied.h" />
     <ClInclude Include="Timer.h">
       <Filter>Utilities</Filter>
-    </ClInclude>
-    <ClInclude Include="Hwk6_B2.h">
-      <Filter>Apps\Homework 6</Filter>
     </ClInclude>
     <ClInclude Include="FEM1D.h">
       <Filter>Meshing\1D</Filter>
@@ -238,14 +240,17 @@
     <ClInclude Include="UnstructuredMesh2D.h">
       <Filter>Meshing\2D</Filter>
     </ClInclude>
-    <ClInclude Include="Hwk8_C1.h">
-      <Filter>Apps\Homework 8</Filter>
-    </ClInclude>
     <ClInclude Include="EquationSystem2D.h">
       <Filter>EquationSystems\2D</Filter>
     </ClInclude>
     <ClInclude Include="Elliptic2DACF.h">
       <Filter>EquationSystems\2D</Filter>
+    </ClInclude>
+    <ClInclude Include="Elliptic2DABCF.h">
+      <Filter>EquationSystems\2D</Filter>
+    </ClInclude>
+    <ClInclude Include="HomeworkDrivers.h">
+      <Filter>Apps</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -6,12 +6,14 @@ FEM2D::FEM2D(const Mesh2D& FEmesh, const int order)
   : mesh(FEmesh),
     polynomialOrder(order),
     Ng(mesh.numNodes + (order - 1) * mesh.numEdges + (order - 1) * (order - 2) * mesh.size / 2),
+    Nu(Ng - mesh.numBoundaryNodes),
     connectivityMatrix(mesh.size, (order + 2) * (order + 1) / 2)
 {
   const int& p = polynomialOrder;
 
   // Debug
   ASSERT(p > 0, "Polynomial order must be positive");
+  ASSERT(mesh.numBoundaryNodes >= 0, "Boundary conditions have not been set up in mesh");
 
   FENodes = new FENode2D[Ng];
 
@@ -22,6 +24,8 @@ FEM2D::FEM2D(const Mesh2D& FEmesh, const int order)
     FENodes[n].x = mesh.meshNodes[n].x;
     FENodes[n].y = mesh.meshNodes[n].y;
     FENodes[n].BC = mesh.meshNodes[n].BC;
+    if ((int)FENodes[n].BC >= 0)
+      boundaryIndices.emplace_back(n);
   }
   for (int K = 0; K < mesh.size; ++K)
     for (int v = 0; v < 3; ++v)
@@ -97,6 +101,21 @@ FEM2D::FEM2D(const Mesh2D& FEmesh, const int order)
         ++localNodeIndex;
       }
   }
+
+  // Order boundary indices
+  bool sorted = false;
+  while (!sorted)
+  {
+    sorted = true;
+    for (int i = 0; i < boundaryIndices.size() - 1; ++i)
+      if (boundaryIndices[i + 1] < boundaryIndices[i])
+      {
+        sorted = false;
+        const int tmp = boundaryIndices[i];
+        boundaryIndices[i] = boundaryIndices[i + 1];
+        boundaryIndices[i + 1] = tmp;
+      }
+  }
 }
 
 FEM2D::FEM2D(const Mesh2D& FEmesh, const int order, real2DFunction initialCondition)
@@ -113,6 +132,8 @@ FEM2D::FEM2D(FEM2D&& other) noexcept
   : mesh(other.mesh),
     polynomialOrder(other.polynomialOrder),
     Ng(other.Ng),
+    Nu(other.Nu),
+    boundaryIndices(std::move(other.boundaryIndices)),
     connectivityMatrix(std::move(connectivityMatrix))
 {
   FENodes = other.FENodes;

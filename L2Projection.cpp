@@ -70,7 +70,7 @@ void L2_Projection1D(FEM1D& fem, real1DFunction f, const int n_gq)
       fem(K, j).u = coefficients[fem[K][j]];
 }
 
-Vector FE_LoadVector2D(FEM2D& fem, real2DFunction f, const int n_gq, const int xDerivativeOrder, const int yDerivativeOrder)
+Vector FE_LoadVector2D(const FEM2D& fem, real2DFunction f, const int n_gq, const int xDerivativeOrder, const int yDerivativeOrder)
 {
   const int& p = fem.polynomialOrder;
 

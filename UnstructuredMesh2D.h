@@ -14,6 +14,8 @@
     2) A list of which nodes belong to which elements
     (to form connectivity matrix), beginning with the
     line ">StartElements" and ending with ">EndElements".
+
+  Note: Boundary conditions have not been implemented for this mesh!
 */
 class UnstructuredMesh2D : public Mesh2D
 {

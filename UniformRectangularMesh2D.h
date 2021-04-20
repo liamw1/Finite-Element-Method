@@ -30,6 +30,8 @@ public:
 
   MeshNode2D operator()(const int elementIndex, const int nodeIndex) const override;
 
+  void setBoundaryConditions(const BC_Type boundaryCondition);
+
   void setBoundaryConditions(const BC_Type leftBoundaryCondition,
                              const BC_Type rightBoundaryCondition,
                              const BC_Type topBoundaryCondition,

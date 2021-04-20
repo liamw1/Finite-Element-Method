@@ -105,6 +105,11 @@ MeshNode2D UniformRectangularMesh2D::operator()(const int elementIndex, const in
   return meshNodes[connectivityMatrix[elementIndex][nodeIndex]];
 }
 
+void UniformRectangularMesh2D::setBoundaryConditions(const BC_Type boundaryCondition)
+{
+  setBoundaryConditions(boundaryCondition, boundaryCondition, boundaryCondition, boundaryCondition);
+}
+
 void UniformRectangularMesh2D::setBoundaryConditions(const BC_Type leftBoundaryCondition,
                                                      const BC_Type rightBoundaryCondition,
                                                      const BC_Type bottomBoundaryCondition,
@@ -127,4 +132,10 @@ void UniformRectangularMesh2D::setBoundaryConditions(const BC_Type leftBoundaryC
   for (int i = 0; i < numNodes; ++i)
     if ((meshNodes[i].x == xL || meshNodes[i].x == xR) && (meshNodes[i].y == yL || meshNodes[i].y == yR))
       meshNodes[i].BC = BC_Type::Corner;
+
+  // Count number of boundary nodes
+  numBoundaryNodes = 0;
+  for (int i = 0; i < numNodes; ++i)
+    if ((int)meshNodes[i].BC >= 0)
+      ++numBoundaryNodes;
 }

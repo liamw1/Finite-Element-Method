@@ -1,5 +1,5 @@
 #include "Precompilied.h"
-#include "Hwk6_B2.h"
+#include "HomeworkDrivers.h"
 
 static real g_n(real x) { return expl(x) * (3 * x + 1 + 2 * cosl(x)); }
 static real a(real x) { return 2 + cosl(x); }
