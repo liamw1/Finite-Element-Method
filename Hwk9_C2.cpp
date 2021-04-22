@@ -18,7 +18,7 @@ void Hwk9_C2_Driver()
   const real xMin = 0, xMax = 1;
   const real yMin = 0, yMax = 1;
   const int nx = 40, ny = 40;
-  const int p = 1;
+  const int p = 2;
   const int n_gq = 7;
 
   // Create equation system
