@@ -14,6 +14,16 @@ Matrix::Matrix(Matrix&& other) noexcept
 {
 }
 
+Matrix& Matrix::operator=(Matrix&& other) noexcept
+{
+  if (&other != this)
+  {
+    n = other.n;
+    entries = std::move(other.entries);
+  }
+  return *this;
+}
+
 Container<real>& Matrix::operator[](const int index)
 {
   // Debug

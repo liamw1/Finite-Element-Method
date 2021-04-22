@@ -14,7 +14,6 @@ public:
   const Mesh2D& mesh;
   const int polynomialOrder;
   const int Ng; // Number of FE nodes
-  const int Nu; // Number of non-boundary FE nodes
   std::vector<int> boundaryIndices{};  // Indices of all boundary nodes, must be ordered!
   FENode2D* FENodes;
 

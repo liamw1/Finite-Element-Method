@@ -12,7 +12,7 @@ class Elliptic2DACF : public EquationSystem2D
 public:
   Elliptic2DACF() = delete;
 
-  Elliptic2DACF(real2DFunction aFunc, real2DFunction cFunc, real2DFunction fFunc);
+  Elliptic2DACF(real2DFunction aFunc, real2DFunction cFunc, real2DFunction fFunc, real2DFunction naturalBoundaryCondition);
 
   /*
     \returns coefficients of FE approximation u_h.
@@ -26,4 +26,5 @@ public:
 
 private:
   real2DFunction a, c, f;
+  real2DFunction naturalBC;
 };

@@ -21,3 +21,9 @@ const std::vector<real>& gauss2DWeightsRef(const int numNodes);
 std::vector<std::array<real, 2>> gauss2DNodesLocal(const Mesh2D& mesh, const int elementIndex, const int numNodes);
 
 std::vector<real> gauss2DWeightsLocal(const Mesh2D& mesh, const int elementIndex, const int numNodes);
+
+
+
+std::vector<std::array<real, 2>> gaussEdgeNodesLocal(const Mesh2D& mesh, const int edgeIndex, const int numNodes);
+
+std::vector<real> gaussEdgeWeightsLocal(const Mesh2D& mesh, const int edgeIndex, const int numNodes);

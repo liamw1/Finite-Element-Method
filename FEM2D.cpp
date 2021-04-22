@@ -6,7 +6,6 @@ FEM2D::FEM2D(const Mesh2D& FEmesh, const int order)
   : mesh(FEmesh),
     polynomialOrder(order),
     Ng(mesh.numNodes + (order - 1) * mesh.numEdges + (order - 1) * (order - 2) * mesh.size / 2),
-    Nu(Ng - mesh.numBoundaryNodes),
     connectivityMatrix(mesh.size, (order + 2) * (order + 1) / 2)
 {
   const int& p = polynomialOrder;
@@ -24,6 +23,7 @@ FEM2D::FEM2D(const Mesh2D& FEmesh, const int order)
     FENodes[n].x = mesh.meshNodes[n].x;
     FENodes[n].y = mesh.meshNodes[n].y;
     FENodes[n].BC = mesh.meshNodes[n].BC;
+    FENodes[n].isCorner = mesh.meshNodes[n].isCorner;
     if ((int)FENodes[n].BC >= 0)
       boundaryIndices.emplace_back(n);
   }
@@ -34,17 +34,38 @@ FEM2D::FEM2D(const Mesh2D& FEmesh, const int order)
   // Then handle nodes along edges
   for (int e = 0; e < mesh.numEdges; ++e)
   {
+    const int& I = mesh.edgeArray[e][0];
+    const int& J = mesh.edgeArray[e][1];
+
     // Grab nodes that form edge
-    const MeshNode2D& A1 = mesh.meshNodes[mesh.edgeArray[e][0]];
-    const MeshNode2D& A2 = mesh.meshNodes[mesh.edgeArray[e][1]];
+    const MeshNode2D& A1 = mesh.meshNodes[I];
+    const MeshNode2D& A2 = mesh.meshNodes[J];
+
+    // Check if nodes form boundary edge
+    bool boundary = false;
+    if (mesh.edgeTypeMatrix[I][J] == 1)
+      boundary = true;
+
+    // Determine correct boundary condition
+    BC_Type BC = BC_Type::Interior;
+    if (A1.isCorner)
+      BC = A2.BC;
+    else
+      BC = A1.BC;
 
     // Create p-1 equally spaced nodes along the line passing through A1,A2
     for (int i = 0; i < p - 1; ++i)
     {
       const real t = (i + 1.0) / p;
+      const int n = mesh.numNodes + e * (p - 1) + i;
 #pragma warning(suppress: 6386)
-      FENodes[mesh.numNodes + e * (p - 1) + i].x = (1 - t) * A1.x + t * A2.x;
-      FENodes[mesh.numNodes + e * (p - 1) + i].y = (1 - t) * A1.y + t * A2.y;
+      FENodes[n].x = (1.0 - t) * A1.x + t * A2.x;
+      FENodes[n].y = (1.0 - t) * A1.y + t * A2.y;
+      if (boundary)
+        FENodes[n].BC = BC;
+#pragma warning(suppress: 6385)
+      if ((int)FENodes[n].BC >= 0)
+        boundaryIndices.emplace_back(n);
     }
   }
   for (int K = 0; K < mesh.size; ++K)
@@ -107,7 +128,7 @@ FEM2D::FEM2D(const Mesh2D& FEmesh, const int order)
   while (!sorted)
   {
     sorted = true;
-    for (int i = 0; i < boundaryIndices.size() - 1; ++i)
+    for (int i = 0; i < (int)boundaryIndices.size() - 1; ++i)
       if (boundaryIndices[i + 1] < boundaryIndices[i])
       {
         sorted = false;
@@ -132,7 +153,6 @@ FEM2D::FEM2D(FEM2D&& other) noexcept
   : mesh(other.mesh),
     polynomialOrder(other.polynomialOrder),
     Ng(other.Ng),
-    Nu(other.Nu),
     boundaryIndices(std::move(other.boundaryIndices)),
     connectivityMatrix(std::move(connectivityMatrix))
 {

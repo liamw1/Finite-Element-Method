@@ -121,7 +121,7 @@ UnstructuredMesh2D::UnstructuredMesh2D(const std::string meshFile)
 
         std::vector<double> element = split(line, ' ');
         for (int i = 0; i < 3; ++i)
-          connectivityMatrix[elementIndex][i] = element[i];
+          connectivityMatrix[elementIndex][i] = (int)element[i];
 
         getline(file, line);
         ++elementIndex;

@@ -19,8 +19,7 @@ enum class BC_Type
   Natural = -1,
   Essential = 0,
   Dirichlet = 1,
-  Neumann = 2,
-  Corner = 200
+  Neumann = 2
 };
 
 enum class MeshType

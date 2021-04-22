@@ -20,6 +20,8 @@ public:
 
   Matrix& operator=(const Matrix& other) = delete;
 
+  Matrix& operator=(Matrix&& other) noexcept;
+
   Container<real>& operator[](const int index);
 
   const Container<real>& operator[](const int index) const;

@@ -7,11 +7,11 @@ static const std::vector<std::array<real, 2>> nullVec2D = {};
 static const std::vector<real> gauss1DNodes2 = { -0.5773502691896257645092,
                                                   0.5773502691896257645092 };
 
-static const std::vector<real> gauss1DWeights2 = { 1,
-                                                   1 };
+static const std::vector<real> gauss1DWeights2 = { 1.0,
+                                                   1.0 };
 
 static const std::vector<real> gauss1DNodes3 = { -0.7745966692414833770359,
-                                                  0,
+                                                  0.0,
                                                   0.7745966692414833770359 };
 
 static const std::vector<real> gauss1DWeights3 = { 0.5555555555555555555556,
@@ -30,7 +30,7 @@ static const std::vector<real> gauss1DWeights4 = { 0.3478548451374538573731,
 
 static const std::vector<real> gauss1DNodes5 = { -0.9061798459386639927976,
                                                  -0.5384693101056830910363,
-                                                  0,
+                                                  0.0,
                                                   0.5384693101056830910363,
                                                   0.9061798459386639927976 };
 
@@ -39,6 +39,36 @@ static const std::vector<real> gauss1DWeights5 = { 0.2369268850561890875143,
                                                    0.5688888888888888888889,
                                                    0.4786286704993664680413,
                                                    0.2369268850561890875143 };
+
+static const std::vector<real> gauss1DNodes6 = { -0.9324695142031520278123,
+                                                 -0.661209386466264513661,
+                                                 -0.2386191860831969086305,
+                                                  0.238619186083196908631,
+                                                  0.661209386466264513661,
+                                                  0.9324695142031520278123 };
+
+static const std::vector<real> gauss1DWeights6 = { 0.1713244923791703450403,
+                                                   0.3607615730481386075698,
+                                                   0.4679139345726910473899,
+                                                   0.46791393457269104739,
+                                                   0.3607615730481386075698,
+                                                   0.1713244923791703450403 };
+
+static const std::vector<real> gauss1DNodes7 = { -0.9491079123427585245262,
+                                                 -0.7415311855993944398639,
+                                                 -0.4058451513773971669066,
+                                                  0.0,
+                                                  0.4058451513773971669066,
+                                                  0.7415311855993944398639,
+                                                  0.9491079123427585245262 };
+
+static const std::vector<real> gauss1DWeights7 = { 0.1294849661688696932706,
+                                                   0.2797053914892766679015,
+                                                   0.38183005050511894495,
+                                                   0.417959183673469387755,
+                                                   0.38183005050511894495,
+                                                   0.279705391489276667901,
+                                                   0.129484966168869693271 };
 
 
 
@@ -73,6 +103,10 @@ const std::vector<real>& gauss1DNodesRef(const int numNodes)
     return gauss1DNodes4;
   case 5:
     return gauss1DNodes5;
+  case 6:
+    return gauss1DNodes6;
+  case 7:
+    return gauss1DNodes7;
   default:
     LOG("Number of nodes not supported", LogLevel::Error);
     return nullVec;
@@ -93,6 +127,10 @@ const std::vector<real>& gauss1DWeightsRef(const int numNodes)
     return gauss1DWeights4;
   case 5:
     return gauss1DWeights5;
+  case 6:
+    return gauss1DWeights6;
+  case 7:
+    return gauss1DWeights7;
   default:
     LOG("Number of nodes not supported", LogLevel::Error);
     return nullVec;
@@ -203,5 +241,35 @@ std::vector<real> gauss2DWeightsLocal(const Mesh2D& mesh, const int elementIndex
   std::vector<real> localWeights = std::vector<real>(numNodes);
   for (int i = 0; i < numNodes; ++i)
     localWeights[i] = 2 * area * w[i];
+  return localWeights;
+}
+
+std::vector<std::array<real, 2>> gaussEdgeNodesLocal(const Mesh2D& mesh, const int edgeIndex, const int numNodes)
+{
+  const MeshNode2D& A1 = mesh.meshNodes[mesh.edgeArray[edgeIndex][0]];
+  const MeshNode2D& A2 = mesh.meshNodes[mesh.edgeArray[edgeIndex][1]];
+  const std::vector<real>& t = gauss1DNodesRef(numNodes);
+
+  std::vector<std::array<real,2>> localNodes = std::vector<std::array<real,2>>(numNodes);
+  for (int i = 0; i < numNodes; ++i)
+  {
+    localNodes[i][0] = (A2.x - A1.x) * t[i] / 2 + (A1.x + A2.x) / 2;
+    localNodes[i][1] = (A2.y - A1.y) * t[i] / 2 + (A1.y + A2.y) / 2;
+  }
+  return localNodes;
+}
+
+std::vector<real> gaussEdgeWeightsLocal(const Mesh2D& mesh, const int edgeIndex, const int numNodes)
+{
+  const MeshNode2D& A1 = mesh.meshNodes[mesh.edgeArray[edgeIndex][0]];
+  const MeshNode2D& A2 = mesh.meshNodes[mesh.edgeArray[edgeIndex][1]];
+  const std::vector<real>& w = gauss1DWeightsRef(numNodes);
+
+  std::vector<real> localWeights = std::vector<real>(numNodes);
+  for (int i = 0; i < numNodes; ++i)
+  {
+    const real distance = sqrtl((A2.x - A1.x) * (A2.x - A1.x) + (A2.y - A1.y) * (A2.y - A1.y));
+    localWeights[i] = distance * w[i] / 2;
+  }
   return localWeights;
 }

@@ -131,7 +131,7 @@ void UniformRectangularMesh2D::setBoundaryConditions(const BC_Type leftBoundaryC
   // Find corner nodes
   for (int i = 0; i < numNodes; ++i)
     if ((meshNodes[i].x == xL || meshNodes[i].x == xR) && (meshNodes[i].y == yL || meshNodes[i].y == yR))
-      meshNodes[i].BC = BC_Type::Corner;
+      meshNodes[i].isCorner = true;
 
   // Count number of boundary nodes
   numBoundaryNodes = 0;
