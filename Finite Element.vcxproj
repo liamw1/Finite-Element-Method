@@ -161,6 +161,7 @@
     <ClCompile Include="Hwk8_C1.cpp" />
     <ClCompile Include="Hwk9_C1.cpp" />
     <ClCompile Include="Hwk9_C2.cpp" />
+    <ClCompile Include="Hwk9_C3.cpp" />
     <ClCompile Include="LagrangeShapeFunctions2D.cpp" />
     <ClCompile Include="Mesh1D.cpp" />
     <ClCompile Include="Mesh2D.cpp" />

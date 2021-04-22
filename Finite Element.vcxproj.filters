@@ -159,6 +159,9 @@
     <ClCompile Include="Hwk9_C2.cpp">
       <Filter>Apps\Homework 9</Filter>
     </ClCompile>
+    <ClCompile Include="Hwk9_C3.cpp">
+      <Filter>Apps\Homework 9</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Integration.h">
