@@ -135,9 +135,6 @@
     <ClCompile Include="LagrangeShapeFunctions2D.cpp">
       <Filter>Functions</Filter>
     </ClCompile>
-    <ClCompile Include="FEM2D.cpp">
-      <Filter>Meshing\2D</Filter>
-    </ClCompile>
     <ClCompile Include="UnstructuredMesh2D.cpp">
       <Filter>Meshing\2D</Filter>
     </ClCompile>
@@ -145,9 +142,6 @@
       <Filter>Apps\Homework 8</Filter>
     </ClCompile>
     <ClCompile Include="EquationSystem2D.cpp">
-      <Filter>EquationSystems\2D</Filter>
-    </ClCompile>
-    <ClCompile Include="Elliptic2DACF.cpp">
       <Filter>EquationSystems\2D</Filter>
     </ClCompile>
     <ClCompile Include="Elliptic2DABCF.cpp">
@@ -247,9 +241,6 @@
       <Filter>Meshing\2D</Filter>
     </ClInclude>
     <ClInclude Include="EquationSystem2D.h">
-      <Filter>EquationSystems\2D</Filter>
-    </ClInclude>
-    <ClInclude Include="Elliptic2DACF.h">
       <Filter>EquationSystems\2D</Filter>
     </ClInclude>
     <ClInclude Include="Elliptic2DABCF.h">

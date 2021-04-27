@@ -60,7 +60,33 @@ void L2_Projection1D(FEM1D& fem, real1DFunction f, const int n_gq);
   Note: This function does NOT cacluate the derivative of f.
   Must pass in the derivative manually.
 */
-Vector FE_LoadVector2D(const FEM2D& fem, real2DFunction f, const int n_gq, const int xDerivativeOrder, const int yDerivativeOrder);
+template<int N>
+Vector FE_LoadVector2D(const FEM2D<N>& fem, real2DFunction f, const int n_gq, const int xDerivativeOrder, const int yDerivativeOrder)
+{
+  const int& p = fem.polynomialOrder;
+
+  Vector b = Vector(fem.Ng);
+  for (int K = 0; K < fem.mesh.size; ++K)
+  {
+    std::vector<std::array<real, 2>> GLnodes = gauss2DNodesLocal(fem.mesh, K, n_gq);
+    std::vector<real> GLweights = gauss2DWeightsLocal(fem.mesh, K, n_gq);
+
+    for (int j = 0; j < (p + 1) * (p + 2) / 2; ++j)
+    {
+      // Calculate inner product between f and j-th shape function on K
+      real innerProduct = 0.0;
+      for (int i = 0; i < n_gq; ++i)
+      {
+        const real& x = GLnodes[i][0];
+        const real& y = GLnodes[i][1];
+        const real integrand = f(x, y) * lagrangeShapeFunction2D(x, y, fem, K, j, xDerivativeOrder, yDerivativeOrder);
+        innerProduct += GLweights[i] * integrand;
+      }
+      b[fem[K][j]] += innerProduct; // Accumulate to b
+    }
+  }
+  return b;
+}
 
 /*
   \returns the FE mass matrix for a function "a" using one FEM2D.
@@ -71,7 +97,11 @@ Vector FE_LoadVector2D(const FEM2D& fem, real2DFunction f, const int n_gq, const
   Note: Full matrix representation is inefficient here.
   Better to use sparse matrix representation.
 */
-Matrix FE_MassMatrix2D(const FEM2D& fem, real2DFunction a, const int n_gq, const int xDerivativeOrder, const int yDerivativeOrder);
+template<int N>
+Matrix FE_MassMatrix2D(const FEM2D<N>& fem, real2DFunction a, const int n_gq, const int xDerivativeOrder, const int yDerivativeOrder)
+{
+  return FE_MassMatrix2D(fem, a, n_gq, xDerivativeOrder, yDerivativeOrder, xDerivativeOrder, yDerivativeOrder);
+}
 
 /*
   \returns the FE mass matrix for a function "a" using one FEM2D.
@@ -82,15 +112,57 @@ Matrix FE_MassMatrix2D(const FEM2D& fem, real2DFunction a, const int n_gq, const
   Note: Full matrix representation is inefficient here.
   Better to use sparse matrix representation.
 */
-Matrix FE_MassMatrix2D(const FEM2D& fem,
+template<int N>
+Matrix FE_MassMatrix2D(const FEM2D<N>& fem,
                        real2DFunction a,
                        const int n_gq, 
                        const int xDerivativeOrder1, const int yDerivativeOrder1, 
-                       const int xDerivativeOrder2, const int yDerivativeOrder2);
+                       const int xDerivativeOrder2, const int yDerivativeOrder2)
+{
+  const int& p = fem.polynomialOrder;
+
+  Matrix M = Matrix(fem.Ng);
+  for (int K = 0; K < fem.mesh.size; ++K)
+  {
+    std::vector<std::array<real, 2>> GLnodes = gauss2DNodesLocal(fem.mesh, K, n_gq);
+    std::vector<real> GLweights = gauss2DWeightsLocal(fem.mesh, K, n_gq);
+
+    for (int i = 0; i < (p + 1) * (p + 2) / 2; ++i)
+      for (int j = 0; j < (p + 1) * (p + 2) / 2; ++j)
+      {
+        // Calculate the inner product between the i-th and j-th shape function on K
+        real innerProduct = 0.0;
+        for (int k = 0; k < n_gq; ++k)
+        {
+          const real& x = GLnodes[k][0];
+          const real& y = GLnodes[k][1];
+          const real integrand = a(x, y) * lagrangeShapeFunction2D(x, y, fem, K, i, xDerivativeOrder1, yDerivativeOrder1)
+            * lagrangeShapeFunction2D(x, y, fem, K, j, xDerivativeOrder2, yDerivativeOrder2);
+          innerProduct += GLweights[k] * integrand;
+        }
+        M[fem[K][i]][fem[K][j]] += innerProduct; // Accumulate to M
+      }
+  }
+  return M;
+}
 
 /*
   Performs and L2 projection on FEM2D for a function f.
 
   \param n_gq: Number of Gaussian quadrature nodes.
 */
-void L2_Projection2D(FEM2D& fem, real2DFunction f, const int n_gq);
+template<int N>
+void L2_Projection2D(FEM2D<N>& fem, real2DFunction f, const int n_gq)
+{
+  const int u = 0;
+  const int& p = fem.polynomialOrder;
+  auto identityFunction = [](real x, real y) { return 1.0; };
+
+  Matrix M = FE_MassMatrix2D(fem, identityFunction, n_gq, 0, 0);
+  Vector b = FE_LoadVector2D(fem, f, n_gq, 0, 0);
+  Vector coefficients = solve(M, b);
+
+  for (int K = 0; K < fem.mesh.size; ++K)
+    for (int j = 0; j < (p + 1) * (p + 2) / 2; ++j)
+      fem(K, j)[u] = coefficients[fem[K][j]];
+}

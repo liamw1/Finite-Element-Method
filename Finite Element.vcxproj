@@ -150,10 +150,8 @@
     <ClCompile Include="Elliptic1DABCF.cpp" />
     <ClCompile Include="Elliptic1DACF.cpp" />
     <ClCompile Include="Elliptic2DABCF.cpp" />
-    <ClCompile Include="Elliptic2DACF.cpp" />
     <ClCompile Include="EquationSystem1D.cpp" />
     <ClCompile Include="EquationSystem2D.cpp" />
-    <ClCompile Include="FEM2D.cpp" />
     <ClCompile Include="Hwk4_C1.cpp" />
     <ClCompile Include="Hwk4_C2.cpp" />
     <ClCompile Include="Hwk4_C3.cpp" />
@@ -196,7 +194,6 @@
     <ClInclude Include="Array2D.h" />
     <ClInclude Include="BoundayEnums.h" />
     <ClInclude Include="Elliptic2DABCF.h" />
-    <ClInclude Include="Elliptic2DACF.h" />
     <ClInclude Include="EquationSystem2D.h" />
     <ClInclude Include="EquationSystem1D.h" />
     <ClInclude Include="FEM2D.h" />

@@ -12,7 +12,9 @@ class Elliptic2DABCF : public EquationSystem2D
 public:
   Elliptic2DABCF() = delete;
 
-  Elliptic2DABCF(real2DFunction aFunc, real2DFunction bFunc, real2DFunction cFunc, real2DFunction fFunc, real2DFunction naturalBoundaryCondition);
+  Elliptic2DABCF(FEM2D<1>& uFem, real2DFunction aFunc, real2DFunction bFunc, real2DFunction cFunc, real2DFunction fFunc, real2DFunction naturalBoundaryCondition);
+
+  const int neq() const override;
 
   /*
     \returns coefficients of FE approximation u_h.
@@ -22,9 +24,10 @@ public:
     Essential boundary conditions should be enforeced
     before each call of this function.
   */
-  Vector solveSystem(const FEM2D& fem, const int n_gq) const override;
+  Vector solveSystem(const int n_gq) const override;
 
 private:
+  FEM2D<1>& fem;
   real2DFunction a, b, c, f;
   real2DFunction naturalBC;
 };

@@ -1,12 +1,19 @@
 #include "Precompilied.h"
 #include "Elliptic2DABCF.h"
 
-Elliptic2DABCF::Elliptic2DABCF(real2DFunction aFunc, real2DFunction bFunc, real2DFunction cFunc, real2DFunction fFunc, real2DFunction naturalBoundaryCondition)
-  : a(aFunc), b(bFunc), c(cFunc), f(fFunc), naturalBC(naturalBoundaryCondition)
+static constexpr int u = 0;
+
+Elliptic2DABCF::Elliptic2DABCF(FEM2D<1>& uFem, real2DFunction aFunc, real2DFunction bFunc, real2DFunction cFunc, real2DFunction fFunc, real2DFunction naturalBoundaryCondition)
+  : fem(uFem), a(aFunc), b(bFunc), c(cFunc), f(fFunc), naturalBC(naturalBoundaryCondition)
 {
 }
 
-Vector Elliptic2DABCF::solveSystem(const FEM2D& fem, const int n_gq) const
+const int Elliptic2DABCF::neq() const
+{
+  return 1;
+}
+
+Vector Elliptic2DABCF::solveSystem(const int n_gq) const
 {
   // Create mass matrices and load vector
   Matrix M_xx = FE_MassMatrix2D(fem, a, n_gq, 1, 0);
@@ -18,11 +25,11 @@ Vector Elliptic2DABCF::solveSystem(const FEM2D& fem, const int n_gq) const
 
   // Create boundary vectors
   Vector bc_n = constructNaturalBoundaryVector2D(fem, naturalBC, n_gq);
-  Vector bc_eM_xx = constructEssentialBoundaryVector2D(fem, M_xx);
-  Vector bc_eM_yy = constructEssentialBoundaryVector2D(fem, M_yy);
-  Vector bc_eM_0x = constructEssentialBoundaryVector2D(fem, M_0x);
-  Vector bc_eM_0y = constructEssentialBoundaryVector2D(fem, M_0y);
-  Vector bc_eM_00 = constructEssentialBoundaryVector2D(fem, M_00);
+  Vector bc_eM_xx = constructEssentialBoundaryVector2D(fem, u, M_xx);
+  Vector bc_eM_yy = constructEssentialBoundaryVector2D(fem, u, M_yy);
+  Vector bc_eM_0x = constructEssentialBoundaryVector2D(fem, u, M_0x);
+  Vector bc_eM_0y = constructEssentialBoundaryVector2D(fem, u, M_0y);
+  Vector bc_eM_00 = constructEssentialBoundaryVector2D(fem, u, M_00);
 
   // Remove boundary indices (since we already know the values at those nodes)
   removeBoundaryIndices(M_xx, fem.boundaryIndices);

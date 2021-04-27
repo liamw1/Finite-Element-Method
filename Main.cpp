@@ -9,5 +9,5 @@ std::ostream& operator<<(std::ostream& os, const BC_Type BC)
 
 int main()
 {
-  Hwk9_C3_Driver();
+  Hwk9_C2_Driver();
 }

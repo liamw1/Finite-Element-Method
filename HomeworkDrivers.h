@@ -10,7 +10,6 @@
 // Equation systems
 #include "Elliptic1DACF.h"
 #include "Elliptic1DABCF.h"
-#include "Elliptic2DACF.h"
 #include "Elliptic2DABCF.h"
 
 // Updating
