@@ -148,7 +148,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Elliptic1DABCF.cpp" />
-    <ClCompile Include="Elliptic1DACF.cpp" />
     <ClCompile Include="Elliptic2DABCF.cpp" />
     <ClCompile Include="EquationSystem1D.cpp" />
     <ClCompile Include="EquationSystem2D.cpp" />
@@ -185,12 +184,10 @@
     <ClCompile Include="UniformMesh1D.cpp" />
     <ClCompile Include="UniformRectangularMesh2D.cpp" />
     <ClCompile Include="UnstructuredMesh2D.cpp" />
-    <ClCompile Include="Updater.cpp" />
     <ClCompile Include="Vector.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Elliptic1DABCF.h" />
-    <ClInclude Include="Elliptic1DACF.h" />
     <ClInclude Include="Array2D.h" />
     <ClInclude Include="BoundayEnums.h" />
     <ClInclude Include="Elliptic2DABCF.h" />
@@ -214,11 +211,11 @@
     <ClInclude Include="Precompilied.h" />
     <ClInclude Include="Print.h" />
     <ClInclude Include="StdLib.h" />
+    <ClInclude Include="StokesFluid.h" />
     <ClInclude Include="Timer.h" />
     <ClInclude Include="UniformMesh1D.h" />
     <ClInclude Include="UniformRectangularMesh2D.h" />
     <ClInclude Include="UnstructuredMesh2D.h" />
-    <ClInclude Include="Updater.h" />
     <ClInclude Include="Vector.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -8,12 +8,9 @@
 #include "UnstructuredMesh2D.h"
 
 // Equation systems
-#include "Elliptic1DACF.h"
 #include "Elliptic1DABCF.h"
 #include "Elliptic2DABCF.h"
 
-// Updating
-#include "Updater.h"
 #include "ErrorAnalysis.h"
 
 void Hwk4_C1_Driver();

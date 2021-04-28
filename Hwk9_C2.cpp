@@ -33,7 +33,7 @@ void Hwk9_C2_Driver()
   Elliptic2DABCF equationSystem = Elliptic2DABCF(fem, a, b, c, f, g_N);
 
   // Solve system
-  update2D(fem, equationSystem, n_gq);
+  equationSystem.update(n_gq);
   fem.plot(u, 1);
 
   // Print values

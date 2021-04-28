@@ -26,9 +26,6 @@
     <Filter Include="L2Projection">
       <UniqueIdentifier>{26f1a666-ab65-4c65-b510-35d8b40606b5}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Updater">
-      <UniqueIdentifier>{87633576-733a-4b2d-8bec-6676d50976e4}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Apps">
       <UniqueIdentifier>{55b11933-d343-4a2b-881c-ad16d1c1ed6e}</UniqueIdentifier>
     </Filter>
@@ -83,9 +80,6 @@
     <ClCompile Include="ErrorAnalysis.cpp">
       <Filter>ErrorAnalysis</Filter>
     </ClCompile>
-    <ClCompile Include="Updater.cpp">
-      <Filter>Updater</Filter>
-    </ClCompile>
     <ClCompile Include="Hwk4_C3.cpp">
       <Filter>Apps\Homework 4</Filter>
     </ClCompile>
@@ -121,9 +115,6 @@
       <Filter>Meshing\2D</Filter>
     </ClCompile>
     <ClCompile Include="Elliptic1DABCF.cpp">
-      <Filter>EquationSystems\1D</Filter>
-    </ClCompile>
-    <ClCompile Include="Elliptic1DACF.cpp">
       <Filter>EquationSystems\1D</Filter>
     </ClCompile>
     <ClCompile Include="EquationSystem1D.cpp">
@@ -194,9 +185,6 @@
     <ClInclude Include="BoundayEnums.h">
       <Filter>Meshing</Filter>
     </ClInclude>
-    <ClInclude Include="Updater.h">
-      <Filter>Updater</Filter>
-    </ClInclude>
     <ClInclude Include="Precompilied.h" />
     <ClInclude Include="Timer.h">
       <Filter>Utilities</Filter>
@@ -225,9 +213,6 @@
     <ClInclude Include="Elliptic1DABCF.h">
       <Filter>EquationSystems\1D</Filter>
     </ClInclude>
-    <ClInclude Include="Elliptic1DACF.h">
-      <Filter>EquationSystems\1D</Filter>
-    </ClInclude>
     <ClInclude Include="Gauss-LegendreNodes.h">
       <Filter>Functions</Filter>
     </ClInclude>
@@ -248,6 +233,9 @@
     </ClInclude>
     <ClInclude Include="HomeworkDrivers.h">
       <Filter>Apps</Filter>
+    </ClInclude>
+    <ClInclude Include="StokesFluid.h">
+      <Filter>EquationSystems\2D</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

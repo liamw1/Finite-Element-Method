@@ -57,3 +57,18 @@ Vector Elliptic2DABCF::solveSystem(const int n_gq) const
 
   return coefficients;
 }
+
+void Elliptic2DABCF::update(const int n_gq)
+{
+  const int& p = fem.polynomialOrder;
+  Vector u_h = solveSystem(n_gq);
+
+  // Modify finite element solution
+  for (int K = 0; K < fem.mesh.size; ++K)
+    for (int j = 0; j < (p + 1) * (p + 2) / 2; ++j)
+    {
+      ASSERT(!std::isinf(u_h[fem[K][j]]), "FE update results in Infinite value");
+      ASSERT(!std::isnan(u_h[fem[K][j]]), "FE update results in NaN");
+      fem(K, j)[u] = u_h[fem[K][j]];
+    }
+}

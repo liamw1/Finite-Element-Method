@@ -1,12 +1,12 @@
 #include "Precompilied.h"
 #include "Elliptic1DABCF.h"
 
-Elliptic1DABCF::Elliptic1DABCF(real1DFunction aFunc, real1DFunction bFunc, real1DFunction cFunc, real1DFunction fFunc, real1DFunction naturalBoundaryCondition)
-  : a(aFunc), b(bFunc), c(cFunc), f(fFunc), naturalBC(naturalBoundaryCondition)
+Elliptic1DABCF::Elliptic1DABCF(FEM1D& uFem, real1DFunction aFunc, real1DFunction bFunc, real1DFunction cFunc, real1DFunction fFunc, real1DFunction naturalBoundaryCondition)
+  : fem(uFem), a(aFunc), b(bFunc), c(cFunc), f(fFunc), naturalBC(naturalBoundaryCondition)
 {
 }
 
-Vector Elliptic1DABCF::solveSystem(const FEM1D& fem, const int n_gq) const
+Vector Elliptic1DABCF::solveSystem(const int n_gq) const
 {
   // Create mass matrices and load vector
   Matrix M_xx = FE_MassMatrix1D(fem, a, n_gq, 1);
@@ -45,4 +45,18 @@ Vector Elliptic1DABCF::solveSystem(const FEM1D& fem, const int n_gq) const
   }
 
   return coefficients;
+}
+
+void Elliptic1DABCF::update(const int n_gq)
+{
+  Vector u_h = solveSystem(n_gq);
+
+  // Modify finite element solution
+  for (int K = 0; K < fem.meshSize; ++K)
+    for (int j = 0; j < fem.polynomialOrder + 1; ++j)
+    {
+      ASSERT(!std::isinf(u_h[fem[K][j]]), "FE update results in Infinite value");
+      ASSERT(!std::isnan(u_h[fem[K][j]]), "FE update results in NaN");
+      fem(K, j).u = u_h[fem[K][j]];
+    }
 }

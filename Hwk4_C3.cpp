@@ -3,6 +3,7 @@
 
 static real g_n(real x) { return (2.0 + expl(x)) * (cosl(x) - sinl(x)); }
 static real a(real x) { return 2.0 + expl(x); }
+static real b(real x) { return 0.0; }
 static real c(real x) { return 1.0 + x * x; }
 static real f(real x) { return (expl(x) * (x - 1.0) + x * (x * x + 3.0)) * cosl(x) + (4.0 + expl(x) * (x + 2.0)) * sinl(x); }
 static real analyticalSolution(real x) { return x * cosl(x); }
@@ -13,9 +14,6 @@ void Hwk4_C3_Driver()
   const real xL = 0, xR = 1;
   const int p = 2, n_gq = 3;
 
-  // Create equation system
-  Elliptic1DACF equation = Elliptic1DACF(a, c, f, g_n);
-
   std::ofstream file1("ErrorRegression.csv");
   std::ofstream file2("DerivativeErrorRegression.csv");
   for (int n = 10; n < 80; n += 10)
@@ -25,8 +23,11 @@ void Hwk4_C3_Driver()
     mesh.setBoundaryConditions(BC_Type::Natural, BC_Type::Natural);
     FEM1D fem = FEM1D(mesh, p);
 
+    // Create equation system
+    Elliptic1DABCF equation = Elliptic1DABCF(fem, a, b, c, f, g_n);
+
     // Solve system
-    update1D(fem, equation, n_gq);
+    equation.update(n_gq);
     print(FE_Error1DGlobal(fem, analyticalSolution, n_gq, 0));
 
     // Write regression

@@ -10,7 +10,9 @@
 class EquationSystem1D
 {
 public:
-  virtual Vector solveSystem(const FEM1D& fem, const int n_gq) const = 0;
+  virtual Vector solveSystem(const int n_gq) const = 0;
+
+  virtual void update(const int n_gq) = 0;
 };
 
 Vector constructNaturalBoundaryVector1D(const FEM1D& fem, real1DFunction naturalBC);

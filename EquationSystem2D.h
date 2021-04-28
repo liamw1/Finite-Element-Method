@@ -19,6 +19,8 @@ public:
 
   virtual Vector solveSystem(const int n_gq) const = 0;
 
+  virtual void update(const int n_gq) = 0;
+
 protected:
   void removeBoundaryIndices(Vector& v, const std::vector<int> bI) const;
   void removeBoundaryIndices(Matrix& A, const std::vector<int> bI) const;

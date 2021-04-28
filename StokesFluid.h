@@ -4,15 +4,14 @@
 #include "L2Projection.h"
 
 /*
-  Equation class for BVP of the form -div(a*grad(u)) + b*div(u) + cu = f.  With the boundary
-  condition u|dOmega_D = g_D.
+  Equation class for a steady state Stokes fluid BVP.
 */
-class Elliptic2DABCF : public EquationSystem2D
+class StokesFluid : public EquationSystem2D
 {
 public:
-  Elliptic2DABCF() = delete;
+  StokesFluid() = delete;
 
-  Elliptic2DABCF(FEM2D<1>& uFem, real2DFunction aFunc, real2DFunction bFunc, real2DFunction cFunc, real2DFunction fFunc, real2DFunction naturalBoundaryCondition);
+  StokesFluid(FEM2D<2>& uFEM, FEM2D<1>& pFEM, real2DFunction fFunc, real2DFunction nuFunc, real2DFunction rhoFunc, real2DFunction naturalBoundaryCondition);
 
   const int neq() const override;
 
@@ -26,11 +25,12 @@ public:
   */
   Vector solveSystem(const int n_gq) const override;
 
-  void update(const int n_gq) override;
-
 private:
-  real2DFunction a, b, c, f;
+  real2DFunction f;          // Body force
+  real2DFunction nu;         // Kinematic viscosity
+  real2DFunction rho;        // Density
   real2DFunction naturalBC;
 
-  FEM2D<1>& fem;
+  FEM2D<2>& uFem;
+  FEM2D<1>& pFem;
 };

@@ -4,6 +4,7 @@
 static real g_e(real x) { return expl(x); }
 static real g_n(real x) { return 0.0; }
 static real a(real x) { return x * x + 2.0; }
+static real b(real x) { return 0.0; }
 static real c(real x) { return x + 1.0; }
 static real f(real x) { return (-4.0 * x * x * x * x - 14.0 * x * x + x - 3.0) *   expl(x * x); }
 
@@ -26,11 +27,11 @@ void Hwk4_C1_Driver()
   FEM1D fem = FEM1D(mesh, p);
 
   // Create equation system
-  Elliptic1DACF equation = Elliptic1DACF(a, c, f, g_n);
+  Elliptic1DABCF equation = Elliptic1DABCF(fem, a, b, c, f, g_n);
 
   // Solve system
   EnforceBoundaryConditions(fem);
-  update1D(fem, equation, n_gq);
+  equation.update(n_gq);
   EnforceBoundaryConditions(fem);
 
   print(fem.evaluate(PI / 4, 1));

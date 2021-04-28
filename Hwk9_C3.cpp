@@ -44,7 +44,7 @@ void Hwk9_C3_Driver()
 
   // Solve system
   EnforceBoundaryConditions(fem);
-  update2D(fem, equationSystem, n_gq);
+  equationSystem.update(n_gq);
   EnforceBoundaryConditions(fem);
   fem.plot(u, 1);
 

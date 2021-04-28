@@ -12,7 +12,7 @@ class Elliptic1DABCF : public EquationSystem1D
 public:
   Elliptic1DABCF() = delete;
 
-  Elliptic1DABCF(real1DFunction aFunc, real1DFunction bFunc, real1DFunction cFunc, real1DFunction fFunc, real1DFunction naturalBoundaryCondition);
+  Elliptic1DABCF(FEM1D& uFem, real1DFunction aFunc, real1DFunction bFunc, real1DFunction cFunc, real1DFunction fFunc, real1DFunction naturalBoundaryCondition);
 
   /*
     \returns coefficients of FE approximation u_h.
@@ -22,9 +22,13 @@ public:
     Essential boundary conditions should be enforeced
     before each call of this function.
   */
-  Vector solveSystem(const FEM1D& fem, const int n_gq) const override;
+  Vector solveSystem(const int n_gq) const override;
+
+  void update(const int n_gq) override;
 
 private:
   real1DFunction a, b, c, f;
   real1DFunction naturalBC;
+
+  FEM1D& fem;
 };
