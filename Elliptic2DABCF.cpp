@@ -8,7 +8,7 @@ Elliptic2DABCF::Elliptic2DABCF(FEM2D<1>& uFem, real2DFunction aFunc, real2DFunct
 {
 }
 
-const int Elliptic2DABCF::neq() const
+int Elliptic2DABCF::neq() const
 {
   return 1;
 }

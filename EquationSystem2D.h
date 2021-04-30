@@ -15,7 +15,7 @@ public:
   /*
     Number of equations/variables in the system
   */
-  virtual const int neq() const = 0;
+  virtual int neq() const = 0;
 
   virtual Vector solveSystem(const int n_gq) const = 0;
 
@@ -24,19 +24,23 @@ public:
 protected:
   void removeBoundaryIndices(Vector& v, const std::vector<int> bI) const;
   void removeBoundaryIndices(Matrix& A, const std::vector<int> bI) const;
+  void removeBoundaryIndices(Matrix& A, const std::vector<int> rI, const std::vector<int> cI) const;
 };
 
 template<int N>
 Vector constructEssentialBoundaryVector2D(const FEM2D<N>& fem, const int varIndex, const Matrix& massMatrix)
 {
-  const int& p = fem.polynomialOrder;
-
-  Vector bc_e = Vector(fem.Ng);
-  for (int i = 0; i < fem.Ng; ++i)
-    for (int n = 0; n < fem.boundaryIndices.size(); ++n)
+  return constructEssentialBoundaryVector2D(fem, fem, varIndex, massMatrix);
+}
+template<int N, int M>
+Vector constructEssentialBoundaryVector2D(const FEM2D<N>& fem1, const FEM2D<M>& fem2, const int varIndex, const Matrix& massMatrix)
+{
+  Vector bc_e = Vector(fem1.Ng);
+  for (int i = 0; i < fem1.Ng; ++i)
+    for (int n = 0; n < fem2.boundaryIndices.size(); ++n)
     {
-      const int& j = fem.boundaryIndices[n];
-      bc_e[i] -= massMatrix[i][j] * fem.FENodes[j][varIndex];
+      const int& j = fem2.boundaryIndices[n];
+      bc_e[i] -= massMatrix[i][j] * fem2.FENodes[j][varIndex];
     }
   return bc_e;
 }

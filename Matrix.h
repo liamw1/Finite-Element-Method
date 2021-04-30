@@ -14,6 +14,8 @@ public:
 
   Matrix(const int size);
 
+  Matrix(const int rows, const int columns);
+
   Matrix(const Matrix& other) = delete;
 
   Matrix(Matrix&& other) noexcept;
@@ -42,7 +44,13 @@ public:
   */
   Matrix subMatrix(const int index) const;
 
+  bool isSquare() const;
+
   int size() const;
+
+  int rows() const;
+
+  int columns() const;
 
   void print() const;
 
@@ -53,6 +61,7 @@ public:
 
 private:
   int n;
+  int m;
   Array2D<real> entries;
 
   /*
@@ -76,3 +85,5 @@ Vector solve(Matrix& A, const Vector& b);
   \returns solution of equation Ax = b.
 */
 Vector solve(Matrix&& A, Vector&& b);
+
+Vector solve(std::vector<std::vector<real>>& A, const Vector& b);

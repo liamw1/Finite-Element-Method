@@ -34,7 +34,7 @@ void Hwk9_C2_Driver()
 
   // Solve system
   equationSystem.update(n_gq);
-  fem.plot(u, 1);
+  fem.plot(u);
 
   // Print values
   const real x = PI / 4, y = PI / 6;

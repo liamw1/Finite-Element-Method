@@ -11,9 +11,12 @@ class StokesFluid : public EquationSystem2D
 public:
   StokesFluid() = delete;
 
-  StokesFluid(FEM2D<2>& uFEM, FEM2D<1>& pFEM, real2DFunction fFunc, real2DFunction nuFunc, real2DFunction rhoFunc, real2DFunction naturalBoundaryCondition);
+  StokesFluid(FEM2D<2>& uFEM, FEM2D<1>& pFEM,
+              real2DFunction f1Func, real2DFunction f2Func,
+              real2DFunction nuFunc,
+              real2DFunction rhoFunc);
 
-  const int neq() const override;
+  int neq() const override;
 
   /*
     \returns coefficients of FE approximation u_h.
@@ -25,11 +28,12 @@ public:
   */
   Vector solveSystem(const int n_gq) const override;
 
+  void update(const int n_gq) override;
+
 private:
-  real2DFunction f;          // Body force
+  real2DFunction f1, f2;          // Body force
   real2DFunction nu;         // Kinematic viscosity
   real2DFunction rho;        // Density
-  real2DFunction naturalBC;
 
   FEM2D<2>& uFem;
   FEM2D<1>& pFem;

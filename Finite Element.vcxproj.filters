@@ -56,6 +56,9 @@
     <Filter Include="Apps\Homework 9">
       <UniqueIdentifier>{e5458ba5-40a2-438d-84a9-21ea03e6cd9c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Apps\Homework 10">
+      <UniqueIdentifier>{1e647f41-833d-439d-8206-f078f9b697e7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Integration.cpp">
@@ -146,6 +149,12 @@
     </ClCompile>
     <ClCompile Include="Hwk9_C3.cpp">
       <Filter>Apps\Homework 9</Filter>
+    </ClCompile>
+    <ClCompile Include="StokesFluid.cpp">
+      <Filter>EquationSystems\2D</Filter>
+    </ClCompile>
+    <ClCompile Include="Hwk10_C1.cpp">
+      <Filter>Apps\Homework 10</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

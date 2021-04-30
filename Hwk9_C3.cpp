@@ -46,7 +46,7 @@ void Hwk9_C3_Driver()
   EnforceBoundaryConditions(fem);
   equationSystem.update(n_gq);
   EnforceBoundaryConditions(fem);
-  fem.plot(u, 1);
+  fem.plot(u);
 
   // Print values
   const real x = PI / 4, y = PI / 6;

@@ -133,8 +133,8 @@ public:
         for (int j = 0; j < p - 2 - i; ++j)
         {
           // Create reference points
-          const real tx = (real)(i + 1) / p;
-          const real ty = (real)(j + 1) / p;
+          const real tx = (real)(i + 1.0) / p;
+          const real ty = (real)(j + 1.0) / p;
 
           // Transform points from reference domain to element K
           FENodes[nodeIndex].x = B[0][0] * tx + B[0][1] * ty + A1.x;
@@ -277,8 +277,8 @@ public:
 
     \param n: Number of points to plot per direction per element.
   */
-  void plot(const int varIndex, int n) const { plot(varIndex, n, 0, 0); }
-  void plot(const int varIndex, int n, const int xDerivativeOrder, const int yDerivativeOrder) const
+  void plot(const int varIndex, const int n = 1) const { plot(varIndex, n, 0, 0); }
+  void plot(const int varIndex, const int n, const int xDerivativeOrder, const int yDerivativeOrder) const
   {
     std::ofstream file("Plot.txt");
 
