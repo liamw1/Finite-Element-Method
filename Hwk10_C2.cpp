@@ -5,12 +5,12 @@ static constexpr int u1 = 0;
 static constexpr int u2 = 1;
 static constexpr int p = 0;
 
-static real f1(real x, real y) { return x * (sinl(x) * sinl(y) + 3 * x) - y * cosl(x) * cosl(y) + 2 * (x * y + 1) * sinl(x) * cosl(y); }
-static real f2(real x, real y) { return cosl(x) * (x * cosl(y) - 2 * (x * y + 1) * sinl(y)) - y * sinl(x) * sinl(y) - PI * cosl(PI * y); }
-static real nu(real x, real y) { return 1 + x * y; }
+static real f1(real x, real y) { return 0; }
+static real f2(real x, real y) { return 0; }
+static real nu(real x, real y) { return 1; }
 static real rho(real x, real y) { return 1; }
-static real g_D1(real x, real y) { return x * (x - 1) * (y - 1) * (cosl(y) - 1) + sinl(x) * cosl(y); }
-static real g_D2(real x, real y) { return sinl(y) * ((x - 1) * (y - 1) * (cosl(x) - 1)) - cosl(x); }
+static real g_D1(real x, real y) { return (y > 1 - TOLERANCE && y < 1 + TOLERANCE) ? 1 : 0; }
+static real g_D2(real x, real y) { return 0; }
 
 static void EnforceBoundaryConditions(FEM2D<2>& fem)
 {
@@ -24,11 +24,11 @@ static void EnforceBoundaryConditions(FEM2D<2>& fem)
     }
 }
 
-void Hwk10_C1_Driver()
+void Hwk10_C2_Driver()
 {
-  const real xMin = 0, xMax = 1;
-  const real yMin = 0, yMax = 1;
-  const int nx = 80, ny = 80;
+  const real xMin = -1, xMax = 1;
+  const real yMin = -1, yMax = 1;
+  const int nx = 20, ny = 20;
   const int polyOrder = 1;
   const int n_gq = 7;
 
@@ -48,20 +48,7 @@ void Hwk10_C1_Driver()
   eq.update(n_gq);
   EnforceBoundaryConditions(uFem);
 
-  // Print values
-  const real x = PI / 7;
-  const real y = PI / 5;
-  print(uFem.evaluate(u1, x, y));
-  print(uFem.evaluate(u2, x, y));
-  print(pFem.evaluate(p, x, y));
-  print();
-  print(uFem.evaluate(u1, x, y, 1, 0));
-  print(uFem.evaluate(u2, x, y, 1, 0));
-  print(pFem.evaluate(p, x, y, 1, 0));
-  print();
-  print(uFem.evaluate(u1, x, y, 0, 1));
-  print(uFem.evaluate(u2, x, y, 0, 1));
-  print(pFem.evaluate(p, x, y, 0, 1));
+  // Plot fields
   uFem.plot(u1);
   uFem.plot(u2);
   pFem.plot(p);

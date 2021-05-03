@@ -22,35 +22,35 @@ public:
   virtual void update(const int n_gq) = 0;
 
 protected:
-  void removeBoundaryIndices(Vector& v, const std::vector<int> bI) const;
-  void removeBoundaryIndices(Matrix& A, const std::vector<int> bI) const;
-  void removeBoundaryIndices(Matrix& A, const std::vector<int> rI, const std::vector<int> cI) const;
+  void removeBoundaryIndices(Vector* v, const std::vector<int> bI) const;
+  void removeBoundaryIndices(Matrix* A, const std::vector<int> bI) const;
+  void removeBoundaryIndices(Matrix* A, const std::vector<int> rI, const std::vector<int> cI) const;
 };
 
 template<int N>
-Vector constructEssentialBoundaryVector2D(const FEM2D<N>& fem, const int varIndex, const Matrix& massMatrix)
+Vector* constructEssentialBoundaryVector2D(const FEM2D<N>& fem, const int varIndex, const Matrix* massMatrix)
 {
   return constructEssentialBoundaryVector2D(fem, fem, varIndex, massMatrix);
 }
 template<int N, int M>
-Vector constructEssentialBoundaryVector2D(const FEM2D<N>& fem1, const FEM2D<M>& fem2, const int varIndex, const Matrix& massMatrix)
+Vector* constructEssentialBoundaryVector2D(const FEM2D<N>& fem1, const FEM2D<M>& fem2, const int varIndex, const Matrix* massMatrix)
 {
-  Vector bc_e = Vector(fem1.Ng);
+  Vector* bc_e = new Vector(fem1.Ng);
   for (int i = 0; i < fem1.Ng; ++i)
     for (int n = 0; n < fem2.boundaryIndices.size(); ++n)
     {
       const int& j = fem2.boundaryIndices[n];
-      bc_e[i] -= massMatrix[i][j] * fem2.FENodes[j][varIndex];
+      (*bc_e)[i] -= (*massMatrix)[i][j] * fem2.FENodes[j][varIndex];
     }
   return bc_e;
 }
 
 template<int N>
-Vector constructNaturalBoundaryVector2D(const FEM2D<N>& fem, real2DFunction naturalBC, const int n_gq)
+Vector* constructNaturalBoundaryVector2D(const FEM2D<N>& fem, real2DFunction naturalBC, const int n_gq)
 {
   const int& p = fem.polynomialOrder;
 
-  Vector bc_n = Vector(fem.Ng);
+  Vector* bc_n = new Vector(fem.Ng);
   for (int K = 0; K < fem.mesh.size; ++K)
   {
     // Find boundary edge if element has one
@@ -85,7 +85,7 @@ Vector constructNaturalBoundaryVector2D(const FEM2D<N>& fem, real2DFunction natu
                 const real integrand = naturalBC(x, y) * lagrangeShapeFunction2D(x, y, fem, K, j, 0, 0);
                 innerProduct += GLweights[i] * integrand;
               }
-              bc_n[fem[K][j]] += innerProduct; // Accumulate to bc_n
+              (*bc_n)[fem[K][j]] += innerProduct; // Accumulate to bc_n
             }
           }
         }

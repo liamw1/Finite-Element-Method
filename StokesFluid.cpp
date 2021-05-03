@@ -15,6 +15,7 @@ StokesFluid::StokesFluid(FEM2D<2>& uFEM, FEM2D<1>& pFEM,
     nu(nuFunc),
     rho(rhoFunc)
 {
+  ASSERT(uFem.polynomialOrder == pFem.polynomialOrder + 1, "The polynomial order of the FEM structure for u must be one greater than the one for p");
 }
 
 int StokesFluid::neq() const
@@ -27,22 +28,21 @@ Vector StokesFluid::solveSystem(const int n_gq) const
   std::function<real(real, real)> rhoInverse = [=](real x, real y) { return 1.0 / rho(x, y); };
 
   // Create mass matrices and load vector
-  Matrix Muu_xx = FE_MassMatrix2D(uFem, nu, n_gq, 1, 0);
-  Matrix Muu_yy = FE_MassMatrix2D(uFem, nu, n_gq, 0, 1);
-  Matrix Mpu_0x = FE_MassMatrix2D(pFem, uFem, rhoInverse, n_gq, 0, 0, 1, 0);
-  Matrix Mpu_0y = FE_MassMatrix2D(pFem, uFem, rhoInverse, n_gq, 0, 0, 0, 1);
-  Vector f_l = FE_LoadVector2D(pFem, identityFunction, n_gq, 0, 0);
-  Vector f1u_h = FE_LoadVector2D(uFem, f1, n_gq, 0, 0);
-  Vector f2u_h = FE_LoadVector2D(uFem, f2, n_gq, 0, 0);
+  Matrix* Muu_xx = FE_MassMatrix2D(uFem, nu, n_gq, 1, 0);
+  Matrix* Muu_yy = FE_MassMatrix2D(uFem, nu, n_gq, 0, 1);
+  Matrix* Mpu_0x = FE_MassMatrix2D(pFem, uFem, rhoInverse, n_gq, 0, 0, 1, 0);
+  Matrix* Mpu_0y = FE_MassMatrix2D(pFem, uFem, rhoInverse, n_gq, 0, 0, 0, 1);
+  Vector* f_l = FE_LoadVector2D(pFem, identityFunction, n_gq, 0, 0);
+  Vector* f1u_h = FE_LoadVector2D(uFem, f1, n_gq, 0, 0);
+  Vector* f2u_h = FE_LoadVector2D(uFem, f2, n_gq, 0, 0);
 
   // Create boundary vectors
-  Vector bc_u1_eM_xx = constructEssentialBoundaryVector2D(uFem, u1, Muu_xx);
-  Vector bc_u1_eM_yy = constructEssentialBoundaryVector2D(uFem, u1, Muu_yy);
-  Vector bc_u1_eM_0x = constructEssentialBoundaryVector2D(pFem, uFem, u1, Mpu_0x);
-
-  Vector bc_u2_eM_xx = constructEssentialBoundaryVector2D(uFem, u2, Muu_xx);
-  Vector bc_u2_eM_yy = constructEssentialBoundaryVector2D(uFem, u2, Muu_yy);
-  Vector bc_u2_eM_0y = constructEssentialBoundaryVector2D(pFem, uFem, u2, Mpu_0y);
+  Vector* bc_u1_eM_xx = constructEssentialBoundaryVector2D(uFem, u1, Muu_xx);
+  Vector* bc_u1_eM_yy = constructEssentialBoundaryVector2D(uFem, u1, Muu_yy);
+  Vector* bc_u1_eM_0x = constructEssentialBoundaryVector2D(pFem, uFem, u1, Mpu_0x);
+  Vector* bc_u2_eM_xx = constructEssentialBoundaryVector2D(uFem, u2, Muu_xx);
+  Vector* bc_u2_eM_yy = constructEssentialBoundaryVector2D(uFem, u2, Muu_yy);
+  Vector* bc_u2_eM_0y = constructEssentialBoundaryVector2D(pFem, uFem, u2, Mpu_0y);
 
   // Remove boundary indices (since we already know the values at those nodes)
   removeBoundaryIndices(Muu_xx, uFem.boundaryIndices);
@@ -64,19 +64,19 @@ Vector StokesFluid::solveSystem(const int n_gq) const
   const int Nu_p = pFem.Ng - (int)pFem.boundaryIndices.size();  // Number of unknowns on p
 
   // Debug
-  ASSERT(Muu_xx.size() == Nu_u, "Matrix is not the correct size");
-  ASSERT(Muu_yy.size() == Nu_u, "Matrix is not the correct size");
-  ASSERT(Mpu_0x.rows() == Nu_p && Mpu_0x.columns() == Nu_u, "Matrix is not the correct size");
-  ASSERT(Mpu_0y.rows() == Nu_p && Mpu_0x.columns() == Nu_u, "Matrix is not the correct size");
-  ASSERT(f_l.size() == Nu_p, "Vector is not the correct size");
-  ASSERT(f1u_h.size() == Nu_u, "Vector is not the correct size");
-  ASSERT(f2u_h.size() == Nu_u, "Vector is not the correct size");
-  ASSERT(bc_u1_eM_xx.size() == Nu_u, "Vector is not the correct size");
-  ASSERT(bc_u1_eM_yy.size() == Nu_u, "Vector is not the correct size");
-  ASSERT(bc_u1_eM_0x.size() == Nu_p, "Vector is not the correct size");
-  ASSERT(bc_u2_eM_xx.size() == Nu_u, "Vector is not the correct size");
-  ASSERT(bc_u2_eM_yy.size() == Nu_u, "Vector is not the correct size");
-  ASSERT(bc_u2_eM_0y.size() == Nu_p, "Vector is not the correct size");
+  ASSERT(Muu_xx->size() == Nu_u, "Matrix is not the correct size");
+  ASSERT(Muu_yy->size() == Nu_u, "Matrix is not the correct size");
+  ASSERT(Mpu_0x->rows() == Nu_p && Mpu_0x->columns() == Nu_u, "Matrix is not the correct size");
+  ASSERT(Mpu_0y->rows() == Nu_p && Mpu_0x->columns() == Nu_u, "Matrix is not the correct size");
+  ASSERT(f_l->size() == Nu_p, "Vector is not the correct size");
+  ASSERT(f1u_h->size() == Nu_u, "Vector is not the correct size");
+  ASSERT(f2u_h->size() == Nu_u, "Vector is not the correct size");
+  ASSERT(bc_u1_eM_xx->size() == Nu_u, "Vector is not the correct size");
+  ASSERT(bc_u1_eM_yy->size() == Nu_u, "Vector is not the correct size");
+  ASSERT(bc_u1_eM_0x->size() == Nu_p, "Vector is not the correct size");
+  ASSERT(bc_u2_eM_xx->size() == Nu_u, "Vector is not the correct size");
+  ASSERT(bc_u2_eM_yy->size() == Nu_u, "Vector is not the correct size");
+  ASSERT(bc_u2_eM_0y->size() == Nu_p, "Vector is not the correct size");
 
   // Matrix M = Matrix(2 * Nu_u + Nu_p + 1);
   std::vector<std::vector<real>> M = std::vector<std::vector<real>>();
@@ -87,31 +87,45 @@ Vector StokesFluid::solveSystem(const int n_gq) const
   for (int i = 0; i < Nu_u; ++i)
     for (int j = 0; j < Nu_u; ++j)
     {
-      M[i][j] = Muu_xx[i][j] + Muu_yy[i][j];
-      M[Nu_u + i][Nu_u + j] = Muu_xx[i][j] + Muu_yy[i][j];
+      M[i][j] = (*Muu_xx)[i][j] + (*Muu_yy)[i][j];
+      M[Nu_u + i][Nu_u + j] = (*Muu_xx)[i][j] + (*Muu_yy)[i][j];
     }
+  delete Muu_xx;
+  delete Muu_yy;
+
   for (int i = 0; i < Nu_p; ++i)
     for (int j = 0; j < Nu_u; ++j)
     {
-      M[2 * Nu_u + i][j] = -1.0 * Mpu_0x[i][j];
-      M[2 * Nu_u + i][Nu_u + j] = -1.0 * Mpu_0y[i][j];
-      M[j][2 * Nu_u + i] = -1.0 * Mpu_0x[i][j];
-      M[Nu_u + j][2 * Nu_u + i] = -1.0 * Mpu_0y[i][j];
+      M[2 * Nu_u + i][j] = -1.0 * (*Mpu_0x)[i][j];
+      M[2 * Nu_u + i][Nu_u + j] = -1.0 * (*Mpu_0y)[i][j];
+      M[j][2 * Nu_u + i] = -1.0 * (*Mpu_0x)[i][j];
+      M[Nu_u + j][2 * Nu_u + i] = -1.0 * (*Mpu_0y)[i][j];
     }
+  delete Mpu_0x;
+  delete Mpu_0y;
+
   for (int i = 0; i < Nu_p; ++i)
   {
-    M[2 * Nu_u + Nu_p][2 * Nu_u + i] = f_l[i];
-    M[2 * Nu_u + i][2 * Nu_u + Nu_p] = f_l[i];
+    M[2 * Nu_u + Nu_p][2 * Nu_u + i] = (*f_l)[i];
+    M[2 * Nu_u + i][2 * Nu_u + Nu_p] = (*f_l)[i];
   }
+  delete f_l;
 
   Vector b = Vector(2 * Nu_u + Nu_p + 1);
   for (int i = 0; i < Nu_u; ++i)
   {
-    b[i] = f1u_h[i] + bc_u1_eM_xx[i] + bc_u1_eM_yy[i];
-    b[Nu_u + i] = f2u_h[i] + bc_u2_eM_xx[i] + bc_u2_eM_yy[i];
+    b[i] = (*f1u_h)[i] + (*bc_u1_eM_xx)[i] + (*bc_u1_eM_yy)[i];
+    b[Nu_u + i] = (*f2u_h)[i] + (*bc_u2_eM_xx)[i] + (*bc_u2_eM_yy)[i];
   }
+  delete bc_u1_eM_xx;
+  delete bc_u1_eM_yy;
+  delete bc_u2_eM_xx;
+  delete bc_u2_eM_yy;
+
   for (int i = 0; i < Nu_p; ++i)
-    b[2 * Nu_u + i] = -1.0 * (bc_u1_eM_0x[i] + bc_u2_eM_0y[i]);
+    b[2 * Nu_u + i] = -1.0 * ((*bc_u1_eM_0x)[i] + (*bc_u2_eM_0y)[i]);
+  delete bc_u1_eM_0x;
+  delete bc_u2_eM_0y;
 
   // Solve linear system for coefficients on unknown nodes
   Vector coefficients = solve(M, b);

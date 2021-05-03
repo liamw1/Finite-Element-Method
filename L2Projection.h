@@ -61,11 +61,11 @@ void L2_Projection1D(FEM1D& fem, real1DFunction f, const int n_gq);
   Must pass in the derivative manually.
 */
 template<int N>
-Vector FE_LoadVector2D(const FEM2D<N>& fem, real2DFunction f, const int n_gq, const int xDerivativeOrder, const int yDerivativeOrder)
+Vector* FE_LoadVector2D(const FEM2D<N>& fem, real2DFunction f, const int n_gq, const int xDerivativeOrder, const int yDerivativeOrder)
 {
   const int& p = fem.polynomialOrder;
 
-  Vector b = Vector(fem.Ng);
+  Vector* b = new Vector(fem.Ng);
   for (int K = 0; K < fem.mesh.size; ++K)
   {
     std::vector<std::array<real, 2>> GLnodes = gauss2DNodesLocal(fem.mesh, K, n_gq);
@@ -82,17 +82,17 @@ Vector FE_LoadVector2D(const FEM2D<N>& fem, real2DFunction f, const int n_gq, co
         const real integrand = f(x, y) * lagrangeShapeFunction2D(x, y, fem, K, j, xDerivativeOrder, yDerivativeOrder);
         innerProduct += GLweights[i] * integrand;
       }
-      b[fem[K][j]] += innerProduct; // Accumulate to b
+      (*b)[fem[K][j]] += innerProduct; // Accumulate to b
     }
   }
   return b;
 }
 template<int N>
-Vector FE_LoadVector2D(const FEM2D<N>& fem, std::function<real(real, real)> f, const int n_gq, const int xDerivativeOrder, const int yDerivativeOrder)
+Vector* FE_LoadVector2D(const FEM2D<N>& fem, std::function<real(real, real)> f, const int n_gq, const int xDerivativeOrder, const int yDerivativeOrder)
 {
   const int& p = fem.polynomialOrder;
 
-  Vector b = Vector(fem.Ng);
+  Vector* b = new Vector(fem.Ng);
   for (int K = 0; K < fem.mesh.size; ++K)
   {
     std::vector<std::array<real, 2>> GLnodes = gauss2DNodesLocal(fem.mesh, K, n_gq);
@@ -109,7 +109,7 @@ Vector FE_LoadVector2D(const FEM2D<N>& fem, std::function<real(real, real)> f, c
         const real integrand = f(x, y) * lagrangeShapeFunction2D(x, y, fem, K, j, xDerivativeOrder, yDerivativeOrder);
         innerProduct += GLweights[i] * integrand;
       }
-      b[fem[K][j]] += innerProduct; // Accumulate to b
+      (*b)[fem[K][j]] += innerProduct; // Accumulate to b
     }
   }
   return b;
@@ -125,30 +125,30 @@ Vector FE_LoadVector2D(const FEM2D<N>& fem, std::function<real(real, real)> f, c
   Better to use sparse matrix representation.
 */
 template<int N>
-Matrix FE_MassMatrix2D(const FEM2D<N>& fem, real2DFunction a, const int n_gq, const int xDerivativeOrder, const int yDerivativeOrder)
+Matrix* FE_MassMatrix2D(const FEM2D<N>& fem, real2DFunction a, const int n_gq, const int xDerivativeOrder, const int yDerivativeOrder)
 {
   return FE_MassMatrix2D(fem, fem, a, n_gq, xDerivativeOrder, yDerivativeOrder, xDerivativeOrder, yDerivativeOrder);
 }
 template<int N>
-Matrix FE_MassMatrix2D(const FEM2D<N>& fem,
-                       real2DFunction a,
-                       const int n_gq, 
-                       const int xDerivativeOrder1, const int yDerivativeOrder1, 
-                       const int xDerivativeOrder2, const int yDerivativeOrder2)
+Matrix* FE_MassMatrix2D(const FEM2D<N>& fem,
+  real2DFunction a,
+  const int n_gq,
+  const int xDerivativeOrder1, const int yDerivativeOrder1,
+  const int xDerivativeOrder2, const int yDerivativeOrder2)
 {
   return FE_MassMatrix2D(fem, fem, a, n_gq, xDerivativeOrder1, yDerivativeOrder1, xDerivativeOrder2, yDerivativeOrder2);
 }
 template<int N>
-Matrix FE_MassMatrix2D(const FEM2D<N>& fem, std::function<real(real, real)> a, const int n_gq, const int xDerivativeOrder, const int yDerivativeOrder)
+Matrix* FE_MassMatrix2D(const FEM2D<N>& fem, std::function<real(real, real)> a, const int n_gq, const int xDerivativeOrder, const int yDerivativeOrder)
 {
   return FE_MassMatrix2D(fem, fem, a, n_gq, xDerivativeOrder, yDerivativeOrder, xDerivativeOrder, yDerivativeOrder);
 }
 template<int N>
-Matrix FE_MassMatrix2D(const FEM2D<N>& fem,
-                       std::function<real(real, real)> a,
-                       const int n_gq,
-                       const int xDerivativeOrder1, const int yDerivativeOrder1,
-                       const int xDerivativeOrder2, const int yDerivativeOrder2)
+Matrix* FE_MassMatrix2D(const FEM2D<N>& fem,
+  std::function<real(real, real)> a,
+  const int n_gq,
+  const int xDerivativeOrder1, const int yDerivativeOrder1,
+  const int xDerivativeOrder2, const int yDerivativeOrder2)
 {
   return FE_MassMatrix2D(fem, fem, a, n_gq, xDerivativeOrder1, yDerivativeOrder1, xDerivativeOrder2, yDerivativeOrder2);
 }
@@ -163,19 +163,19 @@ Matrix FE_MassMatrix2D(const FEM2D<N>& fem,
   Better to use sparse matrix representation.
 */
 template<int N, int M>
-Matrix FE_MassMatrix2D(const FEM2D<N>& fem1, const FEM2D<M>& fem2,
-                       real2DFunction a,
-                       const int n_gq,
-                       const int xDerivativeOrder, const int yDerivativeOrder)
+Matrix* FE_MassMatrix2D(const FEM2D<N>& fem1, const FEM2D<M>& fem2,
+  real2DFunction a,
+  const int n_gq,
+  const int xDerivativeOrder, const int yDerivativeOrder)
 {
   return FE_MassMatrix2D(fem1, fem2, a, n_gq, xDerivativeOrder, yDerivativeOrder, xDerivativeOrder, yDerivativeOrder);
 }
 template<int N, int M>
-Matrix FE_MassMatrix2D(const FEM2D<N>& fem1, const FEM2D<M>& fem2,
-                       real2DFunction a,
-                       const int n_gq,
-                       const int xDerivativeOrder1, const int yDerivativeOrder1,
-                       const int xDerivativeOrder2, const int yDerivativeOrder2)
+Matrix* FE_MassMatrix2D(const FEM2D<N>& fem1, const FEM2D<M>& fem2,
+  real2DFunction a,
+  const int n_gq,
+  const int xDerivativeOrder1, const int yDerivativeOrder1,
+  const int xDerivativeOrder2, const int yDerivativeOrder2)
 {
   // Debug
   ASSERT(fem1.mesh.size == fem2.mesh.size, "FEM structures do not share the same mesh");
@@ -185,7 +185,7 @@ Matrix FE_MassMatrix2D(const FEM2D<N>& fem1, const FEM2D<M>& fem2,
   const int& p1 = fem1.polynomialOrder;
   const int& p2 = fem2.polynomialOrder;
 
-  Matrix A = Matrix(fem1.Ng, fem2.Ng);
+  Matrix* A = new Matrix(fem1.Ng, fem2.Ng);
   for (int K = 0; K < fem1.mesh.size; ++K)
   {
     std::vector<std::array<real, 2>> GLnodes = gauss2DNodesLocal(fem1.mesh, K, n_gq);
@@ -204,25 +204,25 @@ Matrix FE_MassMatrix2D(const FEM2D<N>& fem1, const FEM2D<M>& fem2,
             * lagrangeShapeFunction2D(x, y, fem2, K, j, xDerivativeOrder2, yDerivativeOrder2);
           innerProduct += GLweights[k] * integrand;
         }
-        A[fem1[K][i]][fem2[K][j]] += innerProduct; // Accumulate to M
+        (*A)[fem1[K][i]][fem2[K][j]] += innerProduct; // Accumulate to M
       }
   }
   return A;
 }
 template<int N, int M>
-Matrix FE_MassMatrix2D(const FEM2D<N>& fem1, const FEM2D<M>& fem2,
-                       std::function<real(real, real)> a,
-                       const int n_gq,
-                       const int xDerivativeOrder, const int yDerivativeOrder)
+Matrix* FE_MassMatrix2D(const FEM2D<N>& fem1, const FEM2D<M>& fem2,
+  std::function<real(real, real)> a,
+  const int n_gq,
+  const int xDerivativeOrder, const int yDerivativeOrder)
 {
   return FE_MassMatrix2D(fem1, fem2, a, n_gq, xDerivativeOrder, yDerivativeOrder, xDerivativeOrder, yDerivativeOrder);
 }
 template<int N, int M>
-Matrix FE_MassMatrix2D(const FEM2D<N>& fem1, const FEM2D<M>& fem2,
-                       std::function<real(real, real)> a,
-                       const int n_gq,
-                       const int xDerivativeOrder1, const int yDerivativeOrder1,
-                       const int xDerivativeOrder2, const int yDerivativeOrder2)
+Matrix* FE_MassMatrix2D(const FEM2D<N>& fem1, const FEM2D<M>& fem2,
+  std::function<real(real, real)> a,
+  const int n_gq,
+  const int xDerivativeOrder1, const int yDerivativeOrder1,
+  const int xDerivativeOrder2, const int yDerivativeOrder2)
 {
   // Debug
   ASSERT(fem1.mesh.size == fem2.mesh.size, "FEM structures do not share the same mesh");
@@ -232,7 +232,7 @@ Matrix FE_MassMatrix2D(const FEM2D<N>& fem1, const FEM2D<M>& fem2,
   const int& p1 = fem1.polynomialOrder;
   const int& p2 = fem2.polynomialOrder;
 
-  Matrix A = Matrix(fem1.Ng, fem2.Ng);
+  Matrix* A = new Matrix(fem1.Ng, fem2.Ng);
   for (int K = 0; K < fem1.mesh.size; ++K)
   {
     std::vector<std::array<real, 2>> GLnodes = gauss2DNodesLocal(fem1.mesh, K, n_gq);
@@ -251,7 +251,7 @@ Matrix FE_MassMatrix2D(const FEM2D<N>& fem1, const FEM2D<M>& fem2,
             * lagrangeShapeFunction2D(x, y, fem2, K, j, xDerivativeOrder2, yDerivativeOrder2);
           innerProduct += GLweights[k] * integrand;
         }
-        A[fem1[K][i]][fem2[K][j]] += innerProduct; // Accumulate to M
+        (*A)[fem1[K][i]][fem2[K][j]] += innerProduct; // Accumulate to M
       }
   }
   return A;
@@ -269,9 +269,9 @@ void L2_Projection2D(FEM2D<N>& fem, real2DFunction f, const int n_gq)
   const int& p = fem.polynomialOrder;
   real2DFunction identityFunction = [](real x, real y) { return 1.0; };
 
-  Matrix M = FE_MassMatrix2D(fem, identityFunction, n_gq, 0, 0);
-  Vector b = FE_LoadVector2D(fem, f, n_gq, 0, 0);
-  Vector coefficients = solve(M, b);
+  Matrix* M = FE_MassMatrix2D(fem, identityFunction, n_gq, 0, 0);
+  Vector* b = FE_LoadVector2D(fem, f, n_gq, 0, 0);
+  Vector coefficients = solve(*M, *b);
 
   for (int K = 0; K < fem.mesh.size; ++K)
     for (int j = 0; j < (p + 1) * (p + 2) / 2; ++j)
