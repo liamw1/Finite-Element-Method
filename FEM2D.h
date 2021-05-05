@@ -315,6 +315,46 @@ public:
     remove("Plot.txt");
   }
 
+  void plotField(const int n = 1)
+  {
+    ASSERT(N == 2, "Field plotting only supporting for two variable FEM structres");
+    std::ofstream file("Plot.txt");
+
+    for (int K = 0; K < mesh.size; ++K)
+    {
+      const MeshNode2D& A1 = mesh(K, 0);
+      const MeshNode2D& A2 = mesh(K, 1);
+      const MeshNode2D& A3 = mesh(K, 2);
+
+      // Create transformation matrix
+      Matrix B = Matrix(2);
+      B[0][0] = A2.x - A1.x;
+      B[0][1] = A3.x - A1.x;
+      B[1][0] = A2.y - A1.y;
+      B[1][1] = A3.y - A1.y;
+
+      for (int i = 0; i <= n; ++i)
+        for (int j = 0; j <= n - i; ++j)
+        {
+          // Create reference points
+          const real tx = (real)i / n;
+          const real ty = (real)j / n;
+
+          // Transform points from reference domain to element K
+          const real x = B[0][0] * tx + B[0][1] * ty + A1.x;
+          const real y = B[1][0] * tx + B[1][1] * ty + A1.y;
+
+          file << x << ", " << y << ", ";
+          file << evaluate(0, x, y, K, 0, 0) << ", ";
+          file << evaluate(1, x, y, K, 0, 0) << std::endl;
+        }
+    }
+    file.close();
+    std::cout << "Data written to \"Plot.txt\".  Press any key to continue" << std::endl;
+    std::cin.get();
+    remove("Plot.txt");
+  }
+
   /*
     Determines if the given point (x, y) is inside the specified element.
   */
