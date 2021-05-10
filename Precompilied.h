@@ -1,6 +1,6 @@
 #pragma once
-#include "StdLib.h"
-#include "Log.h"
+#include "Libraries/StdLib.h"
+#include "Debugging/Log.h"
 
 using real = double;
 using real1DFunction = real(*)(real);
